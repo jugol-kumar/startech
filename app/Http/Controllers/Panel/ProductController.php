@@ -68,11 +68,11 @@ class ProductController extends Controller
            'description' => 'nullable|max:400|min:100'
        ]);
 
-       if (Request::input('discountAmount') != null){
-           Request::validate([
-               'discountType' => 'required'
-           ]);
-       }
+//       if (Request::input('discountAmount') != null){
+//           Request::validate([
+//               'discountType' => 'required'
+//           ]);
+//       }
 
        if (Request::input('shippingType') === 'p'){
            Request::validate([

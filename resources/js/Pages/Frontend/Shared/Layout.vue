@@ -20,7 +20,7 @@ import UserInfo from "../Modules/UserInfo.vue";
 import UserLoginForm from "../Pages/UserLoginForm.vue";
 import LoginUserInfo from "../Pages/LoginUserInfo.vue";
 import UserImageWithUpload from '../Customer/UserImageWithUpload.vue'
-import DropdownNav from "../Pages/DropdownNav.vue";
+import DropdownNav from "../Modules/DropdownNav.vue";
 
 
 const cartStore = useCartStore();
@@ -103,7 +103,7 @@ const pages = computed(() =>{
                 </button>
             </div>
 
-            <div class="d-flex align-items-center justify-content-between icon-sm-style" style="gap:10px;">
+<!--            <div class="d-flex align-items-center justify-content-between icon-sm-style" style="gap:10px;">
                 <a class="link-item" href="https://worldvectorlogo.com/downloaded/twitter-3"
                    v-if="store.settingItem.find(item => item.key === 'facebook_profile')?.val" target="_blank">
                     <vue-feather type="facebook" size="25"/>
@@ -118,11 +118,37 @@ const pages = computed(() =>{
                    v-if="store.settingItem.find(item => item.key === 'linkedin_profile')?.val" target="_blank">
                     <vue-feather type="linkedin" size="25"/>
                 </a>
+            </div>-->
+
+            <div class="d-lg-block d-none text-white">
+                <div class="d-flex align-items-center gap-1">
+                    <vue-feather type="gift"/>
+                    <div class="">
+                        <p class="fw-bolder m-0 p-0">Offers</p>
+                        <div class="d-flex align-items-center">
+                            <span>Latest Offers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-lg-block d-none text-white">
+                <div class="d-flex align-items-center gap-1">
+                    <vue-feather type="user"/>
+                    <div class="">
+                        <p class="fw-bolder m-0 p-0">Account</p>
+                        <div class="d-flex align-items-center">
+                            <a class="text-white" href="/customer/login">Register</a>
+                            <span style="margin:0 5px">or</span>
+                            <a class="text-white" href="/customer/login">Login</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="d-lg-block d-none text-white">
                 <UserInfo v-if="$page.props.auth?.user"/>
-                <a href="/customer/login" v-else class="btn border text-white fs-4 fw-bold">Sign in</a>
+                <a href="/customer/login" v-else class="btn bg-white text-primary fs-4 fw-bold">Pc Builder</a>
             </div>
         </div>
     </nav>

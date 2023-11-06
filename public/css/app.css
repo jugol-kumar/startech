@@ -22729,6 +22729,7 @@ html[data-textdirection=rtl] .btn-next svg {
 html body {
   background: #f2f4f8 !important;
   scroll-behavior: smooth !important;
+  overflow-x: hidden !important;
 }
 
 ::-webkit-scrollbar {

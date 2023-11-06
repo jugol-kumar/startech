@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\URL;
 
 class ProductController extends Controller
 {
-    public function products(){
+    public function products($slug = null, $secondSlug=null, $thirdSlug=null){
+
 /*
 
 
@@ -40,9 +41,19 @@ class ProductController extends Controller
         }*/
         return inertia('Frontend/Product/Products',[
             'products' => Product::query()
-                ->with(['category', 'brand', 'user'])
+                ->with(['category','subCategory','childCategory', 'brand', 'user'])
                 ->when(Request::input('category'), function ($query, $search){
                     $query->whereHas('category', function ($query)use($search){
+                        $query->where('slug', $search);
+                    });
+                })
+                ->when(Request::input('sub_category'), function ($query, $search){
+                    $query->whereHas('subCategory', function ($query)use($search){
+                        $query->where('slug', $search);
+                    });
+                })
+                ->when(Request::input('child_category'), function ($query, $search){
+                    $query->whereHas('childCategory', function ($query)use($search){
                         $query->where('slug', $search);
                     });
                 })
@@ -80,7 +91,7 @@ class ProductController extends Controller
                     'product' => $product
                 ]),
             'filters' => Request::only(['search','perPage', 'dateRange']),
-            'main_url' => URL::route('product.products')
+//            'main_url' => URL::route('product.products')
         ]);
     }
 

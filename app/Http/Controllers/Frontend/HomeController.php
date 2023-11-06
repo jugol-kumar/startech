@@ -85,6 +85,7 @@ class HomeController extends Controller
             'category' => Category::with('subCategories', 'products', 'products.category')->where('slug', $slug)->first(),
         ]);
     }
+
     public function showChildCategories($slug){
         return inertia('Frontend/Pages/ShowDetails',[
             'category' => SubCategory::with('category','childCategories', 'products', 'products.category')->where('slug', $slug)->first(),

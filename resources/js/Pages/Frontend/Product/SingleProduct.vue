@@ -115,9 +115,7 @@ const data = useData();
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="py-1 rounded-5 card-body page-shadow d-flex align-items-center justify-content-between">
-                                    <div>
-
-                                    </div>
+                                    <div/>
                                     <div class="d-flex align-items-center gap-1">
 
                                         <button @click="watchlistStore.removeFromWishList(product)"

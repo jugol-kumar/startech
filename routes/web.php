@@ -49,12 +49,15 @@ Route::controller(HomeController::class)->name('frontend.')->group(function(){
     Route::get('/pages/{slug?}', 'pageView');
 
 
+
+
     Route::get('/category/{slug}', 'showSubCategories')->name('showSubCategories');
     Route::get('/sub-category/{slug}', 'showChildCategories')->name('showChildCategories');
     Route::get('/child-category/{slug}', 'showChildCategoriesProducts')->name('showChildCategoriesProducts');
 });
 
 Route::controller(App\Http\Controllers\Frontend\ProductController::class)->name('product.')->group(function(){
+//    Route::get('/{cat_slug?}/{sub_cat_slug?}/{child_cat_slug?}', 'products')->name('categoryProducts');
     Route::get('/products', 'products')->name('products');
     Route::get('/product/single-product/{slug}', 'singleProduct')->name('singleProduct');
     Route::post('/product/single-product/{slug}', 'singleProductWithDiscount')->name('singleProduct');

@@ -21,27 +21,28 @@ onMounted(() =>[
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item first-lavel-cat fw-bold" :class="{'dropdown' : category.sub_categories.length}" v-for="(category, count) in store.getTopCategories">
-                        <a class="nav-link fw-bolder" href="#" v-if="category.sub_categories.length">{{ category.title }}</a>
-                        <a v-else class="nav-link dropdown-toggle fw-bolder" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ category.title }}
-                        </a>
+                        <a class="nav-link fw-bolder" :href="`/products?category=${category.slug}`">{{ category.title }}</a>
+<!--                        <a class="nav-link dropdown-toggle fw-bolder" :href="`/products?category=${category.slug}`" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                            {{ category.title }}-->
+<!--                        </a>-->
 
                         <ul class="dropdown-menu sub-cat-border p-0 page-shadow" :class="count < 8 ? '': 'left-minus'" v-if="category.sub_categories.length">
                             <li class="nav-item" :class="count < 8 ? 'dropend' : 'dropstart'" v-for="category in category.sub_categories">
-                                <a v-if="category.child_categories.length" class="dropdown-item text-black fw-bolder" href="#">
+<!--                                v-if="category.child_categories.length"-->
+                                <a class="dropdown-item text-black fw-bolder" :href="`/products?sub_category=${category.slug}`">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <span>
                                             {{ category.title }}
                                         </span>
-                                        <vue-feather type="chevron-right" size="18"/>
+                                        <vue-feather v-if="category.child_categories.length" type="chevron-right" size="18"/>
                                     </div>
                                 </a>
-                                <a v-else class="dropdown-item text-black fw-bolder" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ category.title }}
-                                </a>
+<!--                                <a v-else class="dropdown-item text-black fw-bolder" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                                    {{ category.title }}-->
+<!--                                </a>-->
                                 <ul class="dropdown-menu p-0 page-shadow" v-if="category.child_categories.length">
                                     <li v-for="category in category.child_categories" :key="'child-'+category.id">
-                                        <a class="dropdown-item text-black fw-bolder" href="#">{{ category.title }}</a>
+                                        <a class="dropdown-item text-black fw-bolder" :href="`/products?child_category=${category.slug}`">{{ category.title }}</a>
                                     </li>
                                 </ul>
                             </li>

@@ -41,44 +41,89 @@ const gridList = (e) => {
 <template>
     <layout :search="props.filters">
         <section class="app-user-list my-5 sm-mt">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                        <span>{{ products.total }} results found <span v-if="props?.filters?.search"> search for</span> <strong > {{ props?.filters?.search }}</strong> </span>
-                    </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                                <span>{{ products.total }} results found <span v-if="props?.filters?.search"> search for</span> <strong > {{ props?.filters?.search }}</strong> </span>
+                                            </div>-->
+                        <!--                    <div class="card">
+                                                <div class="card-body p-0 position-relative d-flex align-items-center">
+                                                    <div class="col-md-9 position-relative">
+                                                        <input type="text" class="form-control p-1 border-0" v-model="search" placeholder="what your looking for ...">
+                                                        <span class="position-absolute d-none d-lg-block" style="right: 20px;top: 16px;color: #c7c7cf;">
+                                                            <vue-feather type="search" size="18"/>
+                                                        </span>
+                                                    </div>
 
+                                                    <div class="col-md-3">
+                                                        <select v-model="orderBy" class="form-control border-0 shadow-none">
+                                                            <option :value="undefined">Sorting</option>
+                                                            <option value="price_low_high">Price Low To High</option>
+                                                            <option value="price_high_low">Price High To Low</option>
+                                                            <option value="newest_first">Newest First</option>
+                                                            <option value="oldest_first">Oldest First</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                        <!-- <div class="container-sm grid-container" id="productView">
+                                            </div>-->
 
-<!--                    <div class="card">
-                        <div class="card-body p-0 position-relative d-flex align-items-center">
-                            <div class="col-md-9 position-relative">
-                                <input type="text" class="form-control p-1 border-0" v-model="search" placeholder="what your looking for ...">
-                                <span class="position-absolute d-none d-lg-block" style="right: 20px;top: 16px;color: #c7c7cf;">
-                                    <vue-feather type="search" size="18"/>
-                                </span>
-                            </div>
-
+                        <div class="row">
                             <div class="col-md-3">
-                                <select v-model="orderBy" class="form-control border-0 shadow-none">
-                                    <option :value="undefined">Sorting</option>
-                                    <option value="price_low_high">Price Low To High</option>
-                                    <option value="price_high_low">Price High To Low</option>
-                                    <option value="newest_first">Newest First</option>
-                                    <option value="oldest_first">Oldest First</option>
-                                </select>
+                                <div class="card">
+                                    <div class="card-body page-shadow">
+                                        <h2>product filters</h2>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-1">
+                                    <div class="card-body page-shadow">
+                                        <h2>product filters</h2>
+                                    </div>
+                                </div>
+                                <div class="card mt-1">
+                                    <div class="card-body page-shadow">
+                                        <h2>product filters</h2>
+                                    </div>
+                                </div>
+                                <div class="card mt-1">
+                                    <div class="card-body page-shadow">
+                                        <h2>product filters</h2>
+                                    </div>
+                                </div>
+                                <div class="card mt-1">
+                                    <div class="card-body page-shadow">
+                                        <h2>product filters</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+
+
+                                <div class="card rounded-5 shadow-none">
+                                    <div class="py-1 rounded-5 card-body page-shadow d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h2 class="fw-bolder text-black">Desktop</h2>
+                                        </div>
+                                        <div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row match-height">
+                                    <div class="col-lg-3 mb-4 col-md-3" v-for="item in products.data" :key="'item-'+item.id">
+                                        <Products :product="item.product"/>
+                                    </div>
+                                    <Pagination :links="products.links" :from="products.from" :to="products.to" :total="products.total" notShowNumber/>
+                                </div>
                             </div>
                         </div>
-                    </div>-->
 
-
-
-                    <div class="container-sm grid-container" id="productView">
-                        <div class="row match-height">
-                            <div class="col-lg-3 mb-4 col-md-3 product-item" v-for="item in products.data" :key="'item-'+item.id">
-                                <Products :product="item.product"/>
-                            </div>
-
-                            <Pagination :links="products.links" :from="products.from" :to="products.to" :total="products.total" notShowNumber/>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -86,7 +131,7 @@ const gridList = (e) => {
     </layout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .card {
     margin-bottom: 1rem;
 }
@@ -134,6 +179,9 @@ const gridList = (e) => {
 }
 .ecommerce-card:hover img{
     transform: scale(1.4);
+}
+.card-shadow{
+    box-shadow: 0 0px 14px -1px rgb(34 41 47 / 32%) !important;
 }
 
 </style>
