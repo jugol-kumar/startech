@@ -22,7 +22,7 @@
 
 <template>
     <footer class="py-5 text-white mt-5 sm-mb-6">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row pb-5">
 
                 <div class="col">
@@ -57,8 +57,8 @@
         </div>
         <div class="container" style="border-top:1px solid #2c2348">
             <div class="d-flex align-items-center justify-content-between mt-2">
-                <p>&copy; All rights reserved</p>
-                <p>Powred By: <a href="" class="text-warning">Creative Tech Park</a></p>
+                <p>&copy; {{ new Date().getFullYear() }} All rights reserved by {{ $page.props.auth.APP_NAME }}</p>
+                <p>Powred By: <a href="https://creativetechpark.com" target="_blank" class="text-warning">Web Design Company in Bangladesh</a> Creative Tech Park</p>
             </div>
         </div>
     </footer>

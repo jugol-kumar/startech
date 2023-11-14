@@ -22811,3 +22811,12 @@ html body {
 .page-shadow {
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
 }
+
+.object-fit-contain {
+  -o-object-fit: contain !important;
+     object-fit: contain !important;
+}
+
+.main-menu .navbar-header, .vertical-overlay-menu.menu-hide .main-menu .navbar-header {
+  height: 7.45rem !important;
+}

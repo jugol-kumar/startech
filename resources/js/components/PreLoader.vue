@@ -1,27 +1,24 @@
 <template>
     <transition name="fade">
         <div class="preloader">
-            <div class="logo">
-                <img src="../../images/loading2.svg" alt="">
+            <!--            <div class="logo">-->
+            <!--                <img src="../../images/loading2.svg" alt="">-->
+            <!--            </div>-->
+            <!--            <p>Please Wait...!</p>-->
+
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
-            <p>Please Wait...!</p>
         </div>
     </transition>
 </template>
 
 <script setup>
-let props = defineProps({
-    backgroundColor:{
-        type:String,
-        default: "#fff"
-    }
-})
-const colorFromScriptSetup = 'green'
-
+//
 </script>
 
 <style scoped>
-.preloader{
-    background: v-bind('props.backgroundColor');
+.preloader {
+    background: var(--bs-primary);/*v-bind('props.backgroundColor');*/
 }
 </style>

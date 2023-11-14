@@ -112,7 +112,7 @@ onMounted(()=>{
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h2>Product And Discount</h2>
+                        <h2 class="card-title">Ads Product</h2>
 
                         <div class="">
                             <label>Ads Title</label>
@@ -132,7 +132,7 @@ onMounted(()=>{
                                         <img :src="option.thumbnail" alt="" width="50" height="50">
                                         <div class="ms-1">
                                             <h6 class="mb-25">{{ option.title.slice(0, 30) }}</h6>
-                                            <p>{{ option.category.title +"/"+ option.brand.name}}</p>
+                                            <p>{{ option.category?.title }}/{{ option.brand?.name ?? '---'}}</p>
                                         </div>
                                     </li>
                                 </template>
@@ -140,7 +140,7 @@ onMounted(()=>{
                         </div>
 
 
-                        <div class="mt-1">
+<!--                        <div class="mt-1">
                             <label>Discount</label>
                             <div class="input-group">
                                 <input type="number"
@@ -155,7 +155,7 @@ onMounted(()=>{
                                     <option value="flat">৳</option>
                                 </select>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="mt-1">

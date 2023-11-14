@@ -126,10 +126,10 @@
                 <!-- Address left -->
                 <div class="col-xl-9 mb-3 mb-xl-0" v-if="checkOutData !== undefined">
                     <!-- Select address -->
-                    <p>Provide Your Shipping Detail's</p>
-                    <div class="row match-height">
+                    <h2 class="card-title fw-bold">Select Your Shipping Detail's</h2>
+                    <div class="row match-height mt-3">
                         <div class="col-md-6 shadow-none" v-for="item in props.user.addresses" v-if="props.user.addresses" :key="item.title">
-                            <div class="card rounded-3 overflow-hidden">
+                            <div class="card rounded-3 overflow-hidden page-shadow">
                                 <div class="card-body p-0">
                                     <input class="custom-option-item-check"
                                            type="radio" :name="'item-'+id"
@@ -185,7 +185,7 @@
 
 
                 <div class="col-xl-3 mb-0">
-                    <div class="border rounded p-3 mb-3">
+                    <div class="border rounded p-2 mb-3 bg-white page-shadow">
                         <span class="text-end">
                             {{ `${store.getCartLength} Items In Your Bag`  }}
                         </span>
@@ -206,7 +206,7 @@
                             <dd class="col-6 text-end">৳ 5.00 </dd>-->
 
                             <dt class="col-6 fw-normal">Delivery Charge</dt>
-                            <dd class="col-6 text-end">{{ store.getCartTotalPrice >= deliveryPrice.charge_condition ? deliveryPrice.charge_condition_price : deliveryPrice.delivery_charge }}</dd>
+                            <dd class="col-6 text-end">{{ store.getCartTotalPrice >= deliveryPrice.charge_condition ? deliveryPrice.charge_condition_price : deliveryPrice.delivery_charge  ?? 0 }}</dd>
 
 
                             <hr>

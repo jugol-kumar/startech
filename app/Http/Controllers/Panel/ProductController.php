@@ -65,7 +65,7 @@ class ProductController extends Controller
            'productPrice' => 'required',
            'unit' => 'required',
            'qty' => 'required',
-           'description' => 'nullable|max:400|min:100'
+           'description' => 'nullable|min:100'
        ]);
 
 //       if (Request::input('discountAmount') != null){

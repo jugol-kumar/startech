@@ -84,6 +84,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row custom-options-checkable g-1 match-height">
+<!--
                                     <div class="col-md">
                                         <input class="custom-option-item-check" v-model="formData.paymentMethod"
                                                type="radio" name="customOptionsCheckableRadiosWithIcon"
@@ -94,6 +95,7 @@
                                             <small>I want to pay by SSl Commerz</small>
                                         </label>
                                     </div>
+-->
 
                                     <div class="col-md">
                                         <input class="custom-option-item-check" v-model="formData.paymentMethod" type="radio"

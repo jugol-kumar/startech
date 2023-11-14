@@ -41,7 +41,7 @@ class CustomerController extends Controller
             $user->verification_code = generate_code();
             $user->save();
             Session::put('user', $user);
-            Notification::sendNow($user, new VerificationNotification($user));
+//            Notification::sendNow($user, new VerificationNotification($user));
             return Redirect::route('customer.verifyOtp');
         }else{
             return back()->withErrors("Record Not Found");

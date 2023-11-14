@@ -23,58 +23,56 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $category = json_decode(get_setting('categoryId'));
+//        $category = json_decode(get_setting('categoryId'));
+        $advised = Advised::all();
+//
+//        // home add 1
+//        $ads1 = json_decode(get_setting('add1'));
+//
+//        $ads1?->items ? $ads1->items = Advised::whereIn('id', $ads1->items)->get() : [];
+//
+//        $ads2 = json_decode(get_setting('add2'));
+//        $ads2?->items ? $ads2->items = Advised::whereIn('id', $ads2->items)->get() : [];
+//
+//        $topProducts = json_decode(get_setting('topProducts'));
+//        $topProducts?->items ? $topProducts->items = Product::whereIn('id', $topProducts->items)->get() : [];
+//
+//        $topCategory = json_decode(get_setting('categories1'));
+//        $topCategory?->items ? $topCategory->items = Category::whereIn('id', $topCategory->items)->with('products')->get() : [];
+//
+//        $homeCategories = json_decode(get_setting('categories2'));
+//        $homeCategories?->items ? $homeCategories->items = Category::whereIn('id', $homeCategories->items)->with('products')->get() : [];
+//
+//        $ads4 = json_decode(get_setting('add4'));
+//        $ads4?->items ? $ads4->items = Advised::whereIn('id', $ads4->items)->get() : [];
+//
+//        $add3 = json_decode(get_setting('add3'));
+//        $add3?->items ? $add3->items = Advised::whereIn('id', $add3->items)->get() : [];
+//
+//        $homeCats = Category::where('top', 1)->get();
+
         $category = Category::with('products')->whereIn('id', $category??[])->get();
 
-        $advised = Advised::all();
-
-
-
-
-
-        // home add 1
-        $ads1 = json_decode(get_setting('add1'));
-
-        $ads1?->items ? $ads1->items = Advised::whereIn('id', $ads1->items)->get() : [];
-
-        $ads2 = json_decode(get_setting('add2'));
-        $ads2?->items ? $ads2->items = Advised::whereIn('id', $ads2->items)->get() : [];
-
-        $topProducts = json_decode(get_setting('topProducts'));
-        $topProducts?->items ? $topProducts->items = Product::whereIn('id', $topProducts->items)->get() : [];
-
-        $topCategory = json_decode(get_setting('categories1'));
-        $topCategory?->items ? $topCategory->items = Category::whereIn('id', $topCategory->items)->with('products')->get() : [];
-
-        $homeCategories = json_decode(get_setting('categories2'));
-        $homeCategories?->items ? $homeCategories->items = Category::whereIn('id', $homeCategories->items)->with('products')->get() : [];
-
-        $ads4 = json_decode(get_setting('add4'));
-        $ads4?->items ? $ads4->items = Advised::whereIn('id', $ads4->items)->get() : [];
-
-        $add3 = json_decode(get_setting('add3'));
-        $add3?->items ? $add3->items = Advised::whereIn('id', $add3->items)->get() : [];
-
-        $homeCats = Category::where('top', 1)->get();
-
+        $homeProducts = Product::whereIn('id', json_decode(get_setting('home_products')))->get();
 
         return inertia("Frontend/Index",[
             'featuredCategories' => Category::where('featured', 1)->get(),
             'featuredBrands' => Brand::with('products')->get(),
             'homeCategory' => $category,
+            'homeContent' => get_setting('home_seo_content'),
             'sliders' => Slider::all(),
-            'homeProducts' => Product::take(40)->get(),
+            'homeProducts' => $homeProducts,
             'advised' => $advised,
-            'pageData' =>[
-                'add1' => $ads1 ?? [],
-                'add2' => $ads2 ?? [],
-                'add3' => $add3 ?? [],
-                'add4' => $ads4 ?? [],
-                'topProducts' => $topProducts ?? [],
-                'homeCategories' => $homeCategories ?? [],
-                'topCategories' => $topCategory ?? [],
-                'homeCats' => $homeCats,
-            ]
+//            'pageData' =>[
+//                'add1' => $ads1 ?? [],
+//                'add2' => $ads2 ?? [],
+//                'add3' => $add3 ?? [],
+//                'add4' => $ads4 ?? [],
+//                'topProducts' => $topProducts ?? [],
+//                'homeCategories' => $homeCategories ?? [],
+//                'topCategories' => $topCategory ?? [],
+//                'homeCats' => $homeCats,
+//            ]
 
         ]);
     }
@@ -99,7 +97,7 @@ class HomeController extends Controller
 
 
     public function fetchTopCategories(){
-        return Category::with('subCategories', 'subCategories.childCategories')->whereNull('parent_id')->oldest()->take(12)->get();
+        return Category::with('subCategories', 'subCategories.childCategories')->whereNull('parent_id')->oldest()->take(14)->get();
     }
     public function fetchFeaturedCategories(){
         return Category::with(['childrens', 'products', 'products.brand', 'products.category'])->whereNull('parent_id')->latest()->take(10)->get();

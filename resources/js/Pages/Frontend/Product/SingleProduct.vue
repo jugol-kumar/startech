@@ -6,6 +6,8 @@ import ProductCarousel from "../Modules/ProductCarousel.vue";
 import {useCartStore} from "../../../Store/useCartStore";
 import {useWishListStore} from "../../../Store/useWishListStore";
 import {useData} from "../../../Composables/useData";
+import StarTProducts from "../Pages/StarTProducts.vue";
+
 const store = useCartStore();
 const watchlistStore = useWishListStore();
 const data = useData();
@@ -36,7 +38,7 @@ const data = useData();
 
     const images = computed(() =>{
         let images = [];
-        for (let i = 0; i< JSON.parse(props.product?.images).length; i++){
+        for (let i = 0; i< JSON.parse(props.product?.images)?.length; i++){
             images.push("/storage/"+JSON.parse(props.product?.images)[i])
         }
         images.push(props.product?.thumbnail)
@@ -62,44 +64,49 @@ const data = useData();
     // const cartSize = ref(null);
     // const selectSize = (event) => cartSize.value = event.target.value;
     const addToCart = (product) =>{
-        if (discountPrice.value){
-            store.addToCart({...product, quantity:initCart.value, size:cartSize, sellPrice:discountPrice.value})
+        // alert(product)
+        let sellPrice = product?.discount > 0  ? product?.discount : product?.price;
+        store.addToCart({...product, quantity:initCart.value, sellPrice:sellPrice})
+        $toast.success("Added to cart successful.")
 
-            // if have product size then start this
+        // if (discountPrice.value){
+        //     store.addToCart({...product, quantity:initCart.value, size:cartSize, sellPrice:discountPrice.value})
+        //
+        //     // if have product size then start this
+        //     // if(cartSize.value !== null){
+        //     //     store.addToCart({...product, quantity:1, size:cartSize, sellPrice:discountPrice.value})
+        //     // }else{
+        //     //     $toast.warning("Please chose first your needed size...")
+        //     // }
+        // }else{
+        // if product size in enable
             // if(cartSize.value !== null){
-            //     store.addToCart({...product, quantity:1, size:cartSize, sellPrice:discountPrice.value})
             // }else{
             //     $toast.warning("Please chose first your needed size...")
             // }
-        }else{
-            store.addToCart({...product, quantity: initCart.value, sellPrice:product?.price})
-
-            // if product size in enable
-            // if(cartSize.value !== null){
-            // }else{
-            //     $toast.warning("Please chose first your needed size...")
-            // }
-        }
+        // }
     }
     const isInCart = computed(() =>{
         return store.cart.find(item => item.id === props.product?.id)?.quantity
     })
+
     const addToWishList = (product) =>{
-        if (discountPrice.value){
-            watchlistStore.addToWishList({...product, quantity:1, sellPrice:discountPrice.value})
+        let sellPrice = product?.discount > 0  ? product?.discount : product?.price;
+        watchlistStore.addToWishList({...product, quantity:1, sellPrice:sellPrice })
 
+        // if (discountPrice.value){
+        //     watchlistStore.addToWishList({...product, quantity:1, sellPrice:discountPrice.value})
+        //
+        //     // if(cartSize.value !== null){
+        //     // }else{
+        //     //     $toast.warning("Please chose first your needed size...")
+        //     // }
+        // }else{
             // if(cartSize.value !== null){
             // }else{
             //     $toast.warning("Please chose first your needed size...")
             // }
-        }else{
-            watchlistStore.addToWishList({...product, quantity:1, sellPrice:product?.price })
-
-            // if(cartSize.value !== null){
-            // }else{
-            //     $toast.warning("Please chose first your needed size...")
-            // }
-        }
+        // }
 
     }
 
@@ -108,7 +115,7 @@ const data = useData();
 <template>
     <Layout>
         <section class="app-ecommerce-details">
-            <div class="card page-shadow  pt-4">
+            <div class="card page-shadow position-relative pt-4">
                 <!-- Product Details starts -->
                 <div class="card-body">
                     <div class="row">
@@ -135,10 +142,10 @@ const data = useData();
 <!--                                            <vue-feather type="bookmark"/>-->
 <!--                                            <span>Save</span>-->
 <!--                                        </button>-->
-                                        <button class="d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">
-                                            <vue-feather type="layers"/>
-                                            <span>Add to Compare</span>
-                                        </button>
+<!--                                        <button class="d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">-->
+<!--                                            <vue-feather type="layers"/>-->
+<!--                                            <span>Add to Compare</span>-->
+<!--                                        </button>-->
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +181,7 @@ const data = useData();
                                             <vue-feather type="check-circle"/>
                                         </div>
                                         <div class="">
-                                            <p class="m-0 fs-2 fw-bolder text-black mb-1">{{ product?.price }} ৳</p>
+                                            <p class="m-0 fs-2 fw-bolder text-black mb-1">{{ product?.discount > 0  ? product?.discount : product?.price }} ৳</p>
                                             <p class="m-0 fw-bold text-black">Buy with Latest price</p>
                                             <p class="m-0 text-black">Online / Cache Payment</p>
                                         </div>
@@ -274,16 +281,16 @@ const data = useData();
                                     <button @click="increment" class="btn btn-primary fs-3 fw-bolder rounded-0" >+</button>
                                 </div>
                                 <div>
-                                    <button v-if="isInCart === undefined" @click="addToCart(product)"  class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0 d-flex align-items-center">
+                                    <button @click="addToCart(product)"  class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0 d-flex align-items-center">
                                         <vue-feather type="shopping-cart" class="me-50"/>
                                         <span class="add-to-cart">{{"Add to cart"}}</span>
                                     </button>
-                                    <button v-else @click="store.incrementQty(product?.id)"
+<!--                                    <button v-else @click="store.incrementQty(product?.id)"
                                             :disabled="isInCart === product?.qty"
                                             class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0 d-flex align-items-center">
                                         <vue-feather type="shopping-cart" class="me-50"/>
                                         <span class="add-to-cart">{{ isInCart+" Item In Cart" }}</span>
-                                    </button>
+                                    </button>-->
                                 </div>
 
 <!--                                <button @click="watchlistStore.removeFromWishList(product)"-->
@@ -363,9 +370,9 @@ const data = useData();
                     <div class="col-md-9">
                         <div class="details-btn-grup d-flex align-items-center gap-1 mb-2">
                             <button class="fw-bolder text-black btn btn-primary">Specifications</button>
-                            <button class="fw-bolder text-black btn bg-white page-shadow">Descriptions</button>
-                            <button class="fw-bolder text-black btn bg-white page-shadow">Questions</button>
-                            <button class="fw-bolder text-black btn bg-white page-shadow">Reviews</button>
+<!--                            <button class="fw-bolder text-black btn bg-white page-shadow">Descriptions</button>-->
+<!--                            <button class="fw-bolder text-black btn bg-white page-shadow">Questions</button>-->
+<!--                            <button class="fw-bolder text-black btn bg-white page-shadow">Reviews</button>-->
                         </div>
                         <div class="card page-shadow">
                             <div class="card-body">
@@ -379,16 +386,31 @@ const data = useData();
                                     <h4>Related Products</h4>
                                     <p class="card-text">People also search for this items</p>
                                 </div>
-                                <ProductCarousel :products="product?.category?.products"/>
+                                <ProductCarousel :products="product?.category?.products" navigation pagination/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+
+                    <div class="col-md-3 sticky-top" style="max-height: 100vh; overflow-y:scroll;">
                         <div class="card page-shadow">
                             <div class="card-body">
-                                here some related products
+                                <h2 class="card-title">Products This Brand</h2>
                             </div>
                         </div>
+
+                        <StarTProducts v-for="item in product?.category?.products" :product="item" :key="'related_productes'+item.id"/>
+
+<!--                        <div class="card page-shadow" v-for="item in product?.category?.products" :key="'related_productes'+item.id">
+                            <div class="card-body">
+                                <div>
+                                    <img class="card-img-top w-100 star-pro-img" :src="props.product.thumbnail" alt="">
+                                    <div>
+                                        <a href="">product title</a>
+                                        <p>price</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

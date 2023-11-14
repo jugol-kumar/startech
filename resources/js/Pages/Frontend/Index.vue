@@ -22,7 +22,7 @@
         homeProducts:[]|null,
         sliders:[]|null,
         advised:[]|null,
-
+        homeContent:String|null,
         pageData:[]|null,
     })
 
@@ -62,7 +62,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="row match-height slider-section ms-auto">
-                                <Carousel :autoplay="5000" :wrap-around="true" v-if="false">
+                                <Carousel :autoplay="5000" :wrap-around="true" v-if="true">
                                     <Slide v-for="slide in props.sliders" :key="slide">
                                         <div class="carousel__item">
                                             <img :src="`/storage/${slide.image}`" alt="">
@@ -91,7 +91,9 @@
                                 <div class="col-md-12 mt-1" v-for="adds in props.advised">
                                     <div class="card page-shadow">
                                         <div class="card-body">
-                                            <img class="w-100" :src="adds.image" alt="">
+                                            <a :href="`/products/ads-products?add=${adds?.slug}`">
+                                                <img class="w-100" :src="adds.image" alt="">
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -110,11 +112,11 @@
 
 
                 <div class="display-grid">
-                    <a href="#" class="single-item" v-for="item in store.getTopCategories">
+                    <a :href="`/products?category=${item.slug}`" class="single-item" v-for="item in store.getTopCategories">
                         <div class="card page-shadow">
                             <div class="card-body">
                                 <img :src="`${item.icon}`" alt="" width="75">
-                                <a class="fw-bolder" href="#">{{ item.title }}</a>
+                                <a class="fw-bolder" :href="`/products?category=${item.slug}`">{{ item.title }}</a>
                             </div>
                         </div>
                     </a>
@@ -130,7 +132,7 @@
                     <p class="text-black">Check & Get Your Desired Product!</p>
                 </div>
                 <div class="row match-height">
-                    <div class="col-lg-3 mb-4 col-md-3 product-item" v-for="product in props.homeProducts">
+                    <div class="col-lg-3 col-md-3 product-item" v-for="product in props.homeProducts">
                         <Products :product="product"/>
                     </div>
                 </div>
@@ -148,19 +150,54 @@
 
 
             </section>
-            <section id="category-with-details" class="sm-mt-15-rem-min mt-3 mb-5">
-                <h2 class="text-black">Preferred Area of Our Work</h2>
-                <p class="text-black" style="line-height:2; font-weight: 500">We are capable to supply and support for all Scientific laboratory products in Bangladesh. We also preferred Pharmaceuticals Industries, Textile, Food industries, University Laboratory and Fisheries Industries Project to supply our products. We are a supplier of University laboratory equipment, college laboratory equipment, textile testing instruments & consumables, food lab equipment, health & safety materials, fish farming items, and cement industries testing equipment and in Bangladesh.</p>
+            <section id="category-with-details" class="sm-mt-15-rem-min mt-3 mb-5" >
+                <div v-html="props.homeContent">
 
-                <h2 class="text-black mt-2">Best Scientific Instruments Seller in Dhaka, Bangladesh</h2>
-                <p class="text-black" style="line-height:2; font-weight: 500">Paradise Scientific Company Ltd. is an online shop and supplier, importer of scientific laboratory items. psc.com.bd carries Seven Hundred or more of lab instruments such as Autoclave, Air Sampler, weight scales, Digital Balance, HPLC System,  GC System,  Balance, Scale & Standard Weight, Laboratory Oven, Bio-Chemistry Analyzer, Bio-Hazard Safety Cabinet, Biological Safety Cabinet, Bio-Suction Pump, Block Heater, BOD Analyzer, BOD Incubator/Incubator, Bulk Density, Burette Digital, Microscope Camera, Centrifuge Machine, Chiller, COD Analyzer, COD Colorimeter, Cold Trap, Colony Counter, Colorimeter Conductivity Meter, Data-Logger, Digestion System (Food Analysis), Digestion Unit (Kjeldhal), Bottle top Dispenser, Disintegration Tester, Dissolution Tester, Distillation Unit, DO Meter, , Dissolved Oxygen Meter, Drying Oven, Elisa Reader, Eye Shower, Fat Extraction System (Food Analysis), Fermenter & Bioreactor, Fiber Extraction System (Food Analysis), Filtration Unit (Vacuum), Freezer, Friability Tester, FT-IR, Fume Hood, Fume Photometer, Gas Generator, GC (Gas Chromatograph), Gel Documentation System, Gel Dryer, Gel Electrophoresis, Growth Chamber, moisture analyzing, Micro balance, vernier calipers, physics, chemistry and biology laboratory products. Paradise Scientific company Ltd. also a retailer, supplier, procurement provider, Importer of lab products and services such as glass and plastic-ware, model, lab balance & Lab equipment, and supply in scientific research and applied science and life science.</p>
+                </div>
+<!--                <h2 class="text-black">Preferred Area of Our Work</h2>-->
+<!--                <p class="text-black" style="line-height:2; font-weight: 500">We are capable to supply and support for all Scientific laboratory products in Bangladesh. We also preferred Pharmaceuticals Industries, Textile, Food industries, University Laboratory and Fisheries Industries Project to supply our products. We are a supplier of University laboratory equipment, college laboratory equipment, textile testing instruments & consumables, food lab equipment, health & safety materials, fish farming items, and cement industries testing equipment and in Bangladesh.</p>-->
 
-                <h2 class="text-black mt-2 font-medium">Hi-tech product selling category</h2>
-                <p class="text-black" style="line-height:2; font-weight: 500">We are always the stockiest and stock all types of products for all kinds of laboratories in Bangladesh. Our best selling products are Pharmaceutical Industries, University, Food Industries, Fish Farming, government institute etc. such as Hardness Tester Digital, Heating Mantle, Homogenizer, Hotplate & Stirrer, HPLC (High Perf. Liquid Chrom.), HPLC Column, Hygrometer, Laboratory Incubator ( Force, Natural, Shaking etc.), Karl Fischer Titratior, Lab Basin/Triple Outlet, Lab Furniture, Laminar Flow Cabinet, LC-MS, Leak Test Apparatus, Liquid Nitrogen Container, Mass Comparator, Melting Point Apparatus, Micropipette, Micro-Plate Mixer, Microplate Reader, Laboratory Microscope, Muffle Furnace, PCR (Thaermal Cycler), PH Meter (with Multi Parameter), Pipette Controller, Polarimeter, Potentiometric Tritator, Powder Flow Meter, Power Supply, Refractometer, Refrigerated Bath Circulator, Laboratory Refrigerator, Rotary Evaporator, Bio Safety Cabinet, Seed Germinator, Shaker, (Orbital/Sieve/Rocker), Sonicator (Ultrasonic Cleaner), Soxhlet Apparatus, Spectrophotometer, Stability/Humidity Chamber, Sterilizer, Viscometer, Vortex Meter, Water Bath, Water Distiller, Water Purification, Tab Density Tester, Tablet Disintegration Tester, Tablet Dissolution Tester, Tablet Friability Tester, Tablet Powder Flow Meter, Test Kit (Laboratory), Thermometer, Titrator Manual/Digital, TLC (Thin Layer Chromatography), TOC Analyzer, TSS/MLSS Meter, Turbidity Meter, Digital Weight Scale, T-Scale, Laboratory Glassware & Instruments Labor</p>
+<!--                <h2 class="text-black mt-2">Best Scientific Instruments Seller in Dhaka, Bangladesh</h2>-->
+<!--                <p class="text-black" style="line-height:2; font-weight: 500">Paradise Scientific Company Ltd. is an online shop and supplier, importer of scientific laboratory items. psc.com.bd carries Seven Hundred or more of lab instruments such as Autoclave, Air Sampler, weight scales, Digital Balance, HPLC System,  GC System,  Balance, Scale & Standard Weight, Laboratory Oven, Bio-Chemistry Analyzer, Bio-Hazard Safety Cabinet, Biological Safety Cabinet, Bio-Suction Pump, Block Heater, BOD Analyzer, BOD Incubator/Incubator, Bulk Density, Burette Digital, Microscope Camera, Centrifuge Machine, Chiller, COD Analyzer, COD Colorimeter, Cold Trap, Colony Counter, Colorimeter Conductivity Meter, Data-Logger, Digestion System (Food Analysis), Digestion Unit (Kjeldhal), Bottle top Dispenser, Disintegration Tester, Dissolution Tester, Distillation Unit, DO Meter, , Dissolved Oxygen Meter, Drying Oven, Elisa Reader, Eye Shower, Fat Extraction System (Food Analysis), Fermenter & Bioreactor, Fiber Extraction System (Food Analysis), Filtration Unit (Vacuum), Freezer, Friability Tester, FT-IR, Fume Hood, Fume Photometer, Gas Generator, GC (Gas Chromatograph), Gel Documentation System, Gel Dryer, Gel Electrophoresis, Growth Chamber, moisture analyzing, Micro balance, vernier calipers, physics, chemistry and biology laboratory products. Paradise Scientific company Ltd. also a retailer, supplier, procurement provider, Importer of lab products and services such as glass and plastic-ware, model, lab balance & Lab equipment, and supply in scientific research and applied science and life science.</p>-->
+
+<!--                <h2 class="text-black mt-2 font-medium">Hi-tech product selling category</h2>-->
+<!--                <p class="text-black" style="line-height:2; font-weight: 500">We are always the stockiest and stock all types of products for all kinds of laboratories in Bangladesh. Our best selling products are Pharmaceutical Industries, University, Food Industries, Fish Farming, government institute etc. such as Hardness Tester Digital, Heating Mantle, Homogenizer, Hotplate & Stirrer, HPLC (High Perf. Liquid Chrom.), HPLC Column, Hygrometer, Laboratory Incubator ( Force, Natural, Shaking etc.), Karl Fischer Titratior, Lab Basin/Triple Outlet, Lab Furniture, Laminar Flow Cabinet, LC-MS, Leak Test Apparatus, Liquid Nitrogen Container, Mass Comparator, Melting Point Apparatus, Micropipette, Micro-Plate Mixer, Microplate Reader, Laboratory Microscope, Muffle Furnace, PCR (Thaermal Cycler), PH Meter (with Multi Parameter), Pipette Controller, Polarimeter, Potentiometric Tritator, Powder Flow Meter, Power Supply, Refractometer, Refrigerated Bath Circulator, Laboratory Refrigerator, Rotary Evaporator, Bio Safety Cabinet, Seed Germinator, Shaker, (Orbital/Sieve/Rocker), Sonicator (Ultrasonic Cleaner), Soxhlet Apparatus, Spectrophotometer, Stability/Humidity Chamber, Sterilizer, Viscometer, Vortex Meter, Water Bath, Water Distiller, Water Purification, Tab Density Tester, Tablet Disintegration Tester, Tablet Dissolution Tester, Tablet Friability Tester, Tablet Powder Flow Meter, Test Kit (Laboratory), Thermometer, Titrator Manual/Digital, TLC (Thin Layer Chromatography), TOC Analyzer, TSS/MLSS Meter, Turbidity Meter, Digital Weight Scale, T-Scale, Laboratory Glassware & Instruments Labor</p>-->
             </section>
         </div>
     </Layout>
 </template>
+
+
+<style>
+.carousel__pagination-button::after {
+    width: 2rem !important;
+    height: 10px !important;
+}
+.carousel .carousel__prev{
+    background: #01020457;
+    position: absolute;
+    left: 21px;
+    color: black;
+    border-radius: 50%;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4rem;
+}
+.carousel .carousel__next{
+    background: #01020457;
+    position: absolute;
+    right: 21px;
+    color: black;
+    border-radius: 50%;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4rem;
+}
+</style>
 
 <style scoped>
 
@@ -202,6 +239,8 @@
     /*position: absolute;*/
     /*top: 2rem;*/
 }
+
+
 .ads-bg{
     background:#f2f4f8;
 }

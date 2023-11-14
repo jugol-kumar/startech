@@ -14,13 +14,13 @@
                 :toggleCollapsed="toggleCollapsed"
                 :collapseTogglerIcon="collapseTogglerIcon"
             >
-                <ul class="nav navbar-nav flex-row">
+                <ul class="nav navbar-nav flex-row align-items-center">
                     <li class="nav-item me-auto">
                         <Link preserve-scroll class="navbar-brand" href="#">
                             <span class="brand-logo">
                                 <img :src="`${$page.props.auth.MAIN_URL}/storage/${dataStore.settingItem.find(item => item.key === 'header_logo')?.val}`" style="max-width: 65px" alt="">
                             </span>
-                        <h2 class="brand-text">{{ dataStore.settingItem.find(item => item.key === 'name')?.val }}</h2>
+<!--                        <h2 class="brand-text">{{ dataStore.settingItem.find(item => item.key === 'name')?.val }}</h2>-->
                     </Link></li>
                     <li class="nav-item nav-toggle">
                         <Link preserve-scroll class="nav-link modern-nav-toggle">

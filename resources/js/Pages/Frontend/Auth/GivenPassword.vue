@@ -55,17 +55,17 @@ const checkVerify = () =>{
                                         <form @submit.prevent="checkVerify" class="row g-1">
                                             <span class="text-danger" v-for="(value, key) in props.errors">{{ value }} </span>
 
-                                            <h2 class="bg-white p-1 p-lg-2 border-start-primary border-start-3" style="border-left-width: 5px !important;">Verify Your Otp Or Password</h2>
+                                            <h2 class="bg-white p-1 p-lg-2 border-start-primary border-start-3" style="border-left-width: 5px !important;">Set Password</h2>
 
                                             <div class="col-12">
                                                 <label>Password<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control"  @input="clearPass" v-model="loginFormData.password" placeholder="Enter OTP Code">
+                                                <input type="password" class="form-control"  @input="clearPass" v-model="loginFormData.password" placeholder="Enter Password">
                                             </div>
 
                                             <div class="col-12">
                                                 <label>Conform password<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control"  @input="clearPass"
-                                                       v-model="loginFormData.conform_pas" placeholder="Enter OTP Code">
+                                                <input type="password" class="form-control"  @input="clearPass"
+                                                       v-model="loginFormData.conform_pas" placeholder="Enter Conform Password">
                                             </div>
 
                                             <div class="col-12">

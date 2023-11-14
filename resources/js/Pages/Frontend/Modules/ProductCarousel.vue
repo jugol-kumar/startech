@@ -1,18 +1,7 @@
 <template>
     <Carousel  :breakpoints="breakpoints"  :items-to-show="2.5" :wrap-around="false">
         <Slide v-for="item in props.products" :key="item.id">
-            <div class="card ecommerce-card position-relative">
-                <div class="item-img overflow-hidden">
-                    <img class="img-fluid card-img-top p-lg-2 p-sm-0" style="max-height: 250px" :src="item.thumbnail" alt="img-placeholder">
-                </div>
-                <div class="text-start p-1 zindex-1 match-height">
-                    <h2>
-                        <a class="text-primary" :href="`${$page.props.auth.MAIN_URL}/product/single-product/${item.slug}`">{{ item.title.slice(0, 28) }}</a>
-                    </h2>
-                    <h6 class="item-price">{{ $showPrice(item.price) }}</h6>
-                    <p class="card-text  item-description" v-html="`${item.description?.slice(0, 50)}...`"></p>
-                </div>
-            </div>
+            <StarTProducts :product="item"/>
         </Slide>
         <template #addons>
             <Navigation v-if="props.navigation"/>
@@ -26,6 +15,8 @@
     import { Carousel, Navigation, Slide, Pagination } from 'vue3-carousel'
     import 'vue3-carousel/dist/carousel.css'
     import ProductCard from "./ProductCard.vue";
+    import StarTProducts from "../Pages/StarTProducts.vue";
+
 
     const props = defineProps({
         products:{

@@ -86,7 +86,8 @@ watch([search, perPage], debounce(function ([val, val2]) {
                                 <div class="card ecommerce-card position-relative" @dblclick="copyToClipboard(item?.slug)">
                                     <div class="item-img text-center">
                                         <a href="#">
-                                            <img class="img-fluid card-img-top p-2" style="max-height: 250px" :src="item?.thumbnail" alt="img-placeholder"></a>
+                                            <img class="img-fluid card-img-top p-2 object-fit-contain" style="max-height: 250px" :src="item?.thumbnail" alt="img-placeholder">
+                                        </a>
                                     </div>
                                     <div class="card-body">
                                         <div class="btn-group dropstart position-absolute" style="border: none; background: inherit;top: 9px !important;right: 4px !important;">
@@ -108,7 +109,7 @@ watch([search, perPage], debounce(function ([val, val2]) {
                                         </div>
 
                                         <div class="item-wrapper d-flex align-items-center justify-content-between"  :class="listView ? 'me-5' : ''">
-                                            <div class="item-rating">
+<!--                                            <div class="item-rating">
                                                 <ul class="unstyled-list list-inline">
                                                     <li class="ratings-list-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star filled-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></li>
                                                     <li class="ratings-list-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star filled-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></li>
@@ -116,7 +117,7 @@ watch([search, perPage], debounce(function ([val, val2]) {
                                                     <li class="ratings-list-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star filled-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></li>
                                                     <li class="ratings-list-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star unfilled-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></li>
                                                 </ul>
-                                            </div>
+                                            </div>-->
                                             <div>
                                                 <h6 class="item-price">{{ $showPrice(item?.price) }}</h6>
                                             </div>

@@ -97,7 +97,7 @@ const pages = computed(() =>{
             </a>
 
             <div class="header-search position-relative">
-                <input type="text" class="form-control p-1"  v-model="search" placeholder="what are you looking for...?">
+                <input type="text" class="form-control p-1"  v-model="search" placeholder="Search">
                 <button v-if="props?.search?.search" class="position-absolute clear-search" @click="clearSearch">
                     <vue-feather type="x"/>
                 </button>
@@ -120,7 +120,7 @@ const pages = computed(() =>{
                 </a>
             </div>-->
 
-            <div class="d-lg-block d-none text-white">
+<!--            <div class="d-lg-block d-none text-white">
                 <div class="d-flex align-items-center gap-1">
                     <vue-feather type="gift"/>
                     <div class="">
@@ -130,26 +130,30 @@ const pages = computed(() =>{
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
-            <div class="d-lg-block d-none text-white">
+            <a href="/dashboard" class="d-lg-block d-none text-white">
                 <div class="d-flex align-items-center gap-1">
                     <vue-feather type="user"/>
                     <div class="">
                         <p class="fw-bolder m-0 p-0">Account</p>
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center" v-if="$page.props.auth?.user">
+                            <a class="text-white" href="/dashboard">Profile</a>
+                            <span style="margin:0 5px">or</span>
+                            <a class="text-white" href="/logout">Logout</a>
+                        </div>
+                        <div class="d-flex align-items-center" v-else>
                             <a class="text-white" href="/customer/login">Register</a>
                             <span style="margin:0 5px">or</span>
                             <a class="text-white" href="/customer/login">Login</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="d-lg-block d-none text-white">
-                <UserInfo v-if="$page.props.auth?.user"/>
-                <a href="/customer/login" v-else class="btn bg-white text-primary fs-4 fw-bold">Pc Builder</a>
-            </div>
+            <a href="/login" class="d-lg-block d-none text-white">
+                <a href="/products?condition=used" class="btn bg-white text-primary fs-4 fw-bold">Pre Owned</a>
+            </a>
         </div>
     </nav>
 
@@ -405,9 +409,9 @@ const pages = computed(() =>{
         class="cart-details-button" style="right: 0">
         <div class="text-white">
             <vue-feather type="shopping-bag"/>
-            <p>{{ cartStore.getCartLength }} Items</p>
+            <p class="m-0">{{ cartStore.getCartLength }} Items</p>
         </div>
-        <p class="cart-price-sidebar">{{ $showPrice(cartStore.getCartTotalPrice) }}</p>
+<!--        <p class="cart-price-sidebar">{{ $showPrice(cartStore.getCartTotalPrice) }}</p>-->
     </a>
 
     <div class="modal modal-slide-in fade sm-cart-modal" id="addItemModal" aria-hidden="true" v-vb-is:modal>
@@ -431,7 +435,7 @@ const pages = computed(() =>{
                                     <div class="d-flex flex-column">
                                         <h3 class="text-capitalize text-primary fs-6">{{ item.title.slice(0,20) }}</h3>
                                         <div>
-                                            <span>{{ item.price }} <vue-feather type="x" size="12"/> {{ item.quantity }} = {{ $showPrice(item.price * item.quantity) }} </span>
+                                            <span>{{ item.sellPrice }} <vue-feather type="x" size="12"/> {{ item.quantity }} = {{ $showPrice(item.sellPrice * item.quantity) }} </span>
                                         </div>
                                     </div>
                                 </div>
@@ -451,8 +455,8 @@ const pages = computed(() =>{
                             </dl>
                         </div>
                         <div class="d-grid mb-3">
-                            <a :href="$page.props.auth.MAIN_URL+'/checkout'" v-if="cartStore.getCartLength > 0" class="btn btn-primary btn-next">Place Order here</a>
-                            <button v-else disabled="true" class="btn btn-primary btn-next">Place Order here</button>
+                            <a :href="$page.props.auth.MAIN_URL+'/checkout'" v-if="cartStore.getCartLength > 0" class="btn btn-primary btn-next">Place Order</a>
+                            <button v-else disabled="true" class="btn btn-primary btn-next">Place Order</button>
                         </div>
                     </div>
                 </div>

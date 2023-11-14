@@ -124,7 +124,6 @@ const createUser = (type) =>{
                                                 </div>
                                             </div>
 -->
-
 <!--                                            <div class="col-sm-6">
                                                 <div class="form-check">
                                                     <input class="form-check-input" v-model="loginFormData.remember" type="checkbox" id="login">

@@ -11,7 +11,7 @@ export const useCartStore = defineStore('cart',{
         addToCart(product){
             const index = this.cart.findIndex(item => item.id === product.id);
             if (index > -1) {
-                this.cart[index].quantity++;
+                this.cart[index].quantity = product.quantity;
             }else{
                 this.cart.push(product);
             }
@@ -61,7 +61,7 @@ export const useCartStore = defineStore('cart',{
             return this.cart;
         },
         getCartTotalPrice(){
-            return this.cart.reduce((total, item) => total + item.price * item.quantity, 0)
+            return this.cart.reduce((total, item) => total + item.sellPrice * item.quantity, 0)
         }
     }
 

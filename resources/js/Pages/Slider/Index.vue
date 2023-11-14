@@ -29,12 +29,12 @@ let addRow = () => {
 
 let deleteRow = (index) => formData.items.splice(index, 1)
 
-onMounted(() =>{
-    formData.isNav = props.banners[0]?.isNavigate;
-    formData.isPeg = props.banners[0]?.isPaginate;
-    formData.autoPlay = props.banners[0]?.autoPlay;
-    formData.items = JSON.parse(props.banners[0]['info'])?.length > 0 ? JSON.parse(props.banners[0]['info']) : formData.items;
-});
+// onMounted(() =>{
+//     formData.isNav = props.banners[0]?.isNavigate;
+//     formData.isPeg = props.banners[0]?.isPaginate;
+//     formData.autoPlay = props.banners[0]?.autoPlay;
+//     formData.items = JSON.parse(props.banners[0]['info'])?.length > 0 ? JSON.parse(props.banners[0]['info']) : formData.items;
+// });
 
 
 const prevImage = ref('../../../images/placeholder.avif');

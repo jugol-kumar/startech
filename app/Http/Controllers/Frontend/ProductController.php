@@ -7,7 +7,9 @@ use App\Models\ActiveColor;
 use App\Models\Advised;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\ChildCategory;
 use App\Models\Product;
+use App\Models\SubCategory;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -39,59 +41,98 @@ class ProductController extends Controller
                 $query->orderBy('created_at', 'asc');
             }
         }*/
-        return inertia('Frontend/Product/Products',[
-            'products' => Product::query()
-                ->with(['category','subCategory','childCategory', 'brand', 'user'])
-                ->when(Request::input('category'), function ($query, $search){
-                    $query->whereHas('category', function ($query)use($search){
-                        $query->where('slug', $search);
-                    });
-                })
-                ->when(Request::input('sub_category'), function ($query, $search){
-                    $query->whereHas('subCategory', function ($query)use($search){
-                        $query->where('slug', $search);
-                    });
-                })
-                ->when(Request::input('child_category'), function ($query, $search){
-                    $query->whereHas('childCategory', function ($query)use($search){
-                        $query->where('slug', $search);
-                    });
-                })
-                ->when(Request::input('brand'), function ($query, $search){
-                    $query->whereHas('brand', function ($query)use($search){
-                        $query->where('slug', $search);
-                    });
-                })
-                ->when(Request::input('orderBy'), function ($query, $search) {
-                    if ($search === 'price_low_high'){
-                        $query->orderBy('price', 'asc');
-                    }
-                    if ($search === 'price_high_low'){
-                        $query->orderBy('price', 'desc');
-                    }
-                    if ($search === 'newest_first'){
-                        $query->orderBy('created_at', 'desc');
-                    }
-                    if ($search === 'oldest_first'){
-                        $query->orderBy('created_at', 'asc');
-                    }
-                })
-                ->when(Request::input('search'), function ($query, $search){
-                    $query->where('title', 'like', "%{$search}%");
-                })
+
+
+        $category = null;
+        if(Request::input('category')){
+            $category = Category::where('slug', Request::input('category'))->first();
+        }
+        if(Request::input('sub_category')){
+            $category = SubCategory::where('slug', Request::input('sub_category'))->first();
+        }
+        if(Request::input('child_category')){
+            $category = ChildCategory::where('slug', Request::input('child_category'))->first();
+        }
+
+        $categories = Category::with(['subCategories', 'subCategories.childCategories'])->get();
+        $brands = Brand::all();
+
+        $products = Product::query()
+        ->with(['category','subCategory','childCategory', 'brand', 'user'])
+        ->when(Request::input('category'), function ($query, $search) use($category){
+            $query->whereHas('category', function ($query)use($search){
+                $query->where('slug', $search);
+            });
+        })
+        ->when(Request::input('sub_category'), function ($query, $search){
+            $query->whereHas('subCategory', function ($query)use($search){
+                $query->where('slug', $search);
+            });
+        })
+
+        ->when(Request::input('child_category'), function ($query, $search){
+            $query->whereHas('childCategory', function ($query)use($search){
+                $query->where('slug', $search);
+            });
+        })
+        ->when(Request::input('brand'), function ($query, $search){
+            $query->whereHas('brand', function ($query)use($search){
+                $query->where('slug', $search);
+            });
+        })
+        ->when(Request::input('condition'), function ($query, $search){
+            if($search == 'null'){
+                $query->orderBy('cod', 'asc');
+            }
+            if($search == 'used'){
+                $query->where('cod', 1);
+            }
+            if($search == 'new'){
+                $query->where('cod', 0);
+            }
+        })
+        ->when(Request::input('priceRange'), function ($query, $search){
+            $query->whereBetween('price', [$search['min'], $search['max']]);
+        })
+        ->when(Request::input('orderBy'), function ($query, $search) {
+            if ($search === 'price_low_high'){
+                $query->orderBy('price', 'asc');
+            }
+            if ($search === 'price_high_low'){
+                $query->orderBy('price', 'desc');
+            }
+            if ($search === 'newest_first'){
+                $query->orderBy('created_at', 'desc');
+            }
+            if ($search === 'oldest_first'){
+                $query->orderBy('created_at', 'asc');
+            }
+        })
+        ->when(Request::input('search'), function ($query, $search){
+            $query->where('title', 'like', "%{$search}%");
+        })
 //                ->when(Request::input('add'), function ($query, $search){
 //                    $query->whereHas('ads', function ($query)use($search){
 //                        $query->where('slug', $search);
 //                    });
 //                })
-                ->latest()
-                ->paginate(Request::input('perPage') ?? 30)
-                ->withQueryString()
-                ->through(fn($product) => [
-                    'product' => $product
-                ]),
+        ->latest()
+        ->paginate(Request::input('perPage') ?? 30)
+        ->withQueryString()
+        ->through(fn($product) => [
+            'product' => $product
+        ]);
+
+        return inertia('Frontend/Product/Products',[
+            'products' => $products,
+            'category' => $category,
+            'categories' => $categories,
+            'brands' => $brands,
+            'maxPrice' => Product::query()->max('price'),
+            'minPrice' => Product::query()->min('price'),
             'filters' => Request::only(['search','perPage', 'dateRange']),
-//            'main_url' => URL::route('product.products')
+            'checkCondition' => Request::input(['condition']),
+            'main_url' => URL::full(),
         ]);
     }
 
@@ -109,7 +150,7 @@ class ProductController extends Controller
 
     public function singleProduct($slug){
 
-        $product = Product::where('slug', $slug)->first();//->with(['category', 'brand', 'active_color', 'category.products'])->first();
+        $product = Product::with(['category', 'brand', 'brand.products', 'category.products'])->where('slug', $slug)->first();//->with(['category', 'brand', 'active_color', 'category.products'])->first();
 //        $add = Advised::where('id', Request::input('add_id'))->first();
 
 //        $discountData = null;

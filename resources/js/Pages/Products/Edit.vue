@@ -118,7 +118,6 @@ const seoDetailsModal = () => document.getElementById('seoDetailsModal').$vb.mod
 const vatAndTax = () => document.getElementById('vatAndTax').$vb.modal.show();
 const actionModal = () => document.getElementById('actionModal').$vb.modal.show();
 const shiConfig = (event) =>{
-    console.log(event.target.value);
     if (event.target.value === 'p'){
         document.getElementById('addShipCost').$vb.modal.show();
     }
@@ -143,13 +142,13 @@ const cancelProducts = () => {
 const fullPageSpecification = ref(false)
 const fullPageSpec = () => fullPageSpecification.value = true;
 const defaultPageSpec = () => fullPageSpecification.value = false;
+
+
 const thumbnailImage=ref(props.product.thumbnail)
 const uploadThumbnail = (event) => {
     formData.thumbnail = event.target.files[0];
     thumbnailImage.value = URL.createObjectURL(event.target.files[0])
 }
-
-const seoImageUpload = (event) => formData.seoImage = event.target.files[0];
 
 const loadImages = ref([]);
 const images = (event) =>{
@@ -158,7 +157,12 @@ const images = (event) =>{
         loadImages.value.push(URL.createObjectURL(event.target.files[i]))
     }
 }
+const seoImageUpload = (event) => formData.seoImage = event.target.files[0];
 
+const removeImage = (index) =>{
+    formData.images.splice(index, 1);
+    loadImages.value.splice(index, 1);
+}
 
 onMounted(() =>{
     for (let i = 0; i< formData.images.length; i++){
@@ -166,10 +170,6 @@ onMounted(() =>{
     }
 })
 
-const removeImage = (index) =>{
-    formData.images.splice(index, 1);
-    loadImages.value.splice(index, 1);
-}
 
 
 </script>

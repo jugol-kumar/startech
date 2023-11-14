@@ -33,7 +33,7 @@
 .cart-details-button{
     right: 0px;
     position: fixed;
-    top: 50%;
+    bottom: 5%;
     background: var(--bs-primary);
     text-align: center;
     padding: 9px;

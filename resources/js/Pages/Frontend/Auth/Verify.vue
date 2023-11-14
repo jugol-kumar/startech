@@ -11,7 +11,7 @@ const props = defineProps({
 
 
 const changeViewRef = ref(true);
-const isShowSidebar = ref(true);
+const isShowSidebar = ref(false);
 const hideMenu = () => isShowSidebar.value = !isShowSidebar.value;
 
 const isLoading = ref(false);

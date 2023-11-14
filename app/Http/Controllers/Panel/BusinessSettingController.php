@@ -23,6 +23,7 @@ class BusinessSettingController extends Controller
         return inertia('Settings/Setting', [
             'main_url' => URL::route('admin.businessSave'),
             'categories' => Category::with('childrens')->get(),
+            'products' => Product::with('category:id,title')->get(),
             'updateSmtp' => URL::route('admin.updateSmtp'),
             'bSettings' =>[
                 'name'        => get_setting('name'),
@@ -51,6 +52,7 @@ class BusinessSettingController extends Controller
                 'twitter_profile'         => get_setting('twitter_profile'),
                 'header_categories' => json_decode(get_setting('header_categories')),
                 'headerMenuSetup' => json_decode(get_setting('headerMenuSetup')),
+                'home_seo_content' =>  get_setting('home_seo_content'),
 
                 'mailDriver' => get_setting('mailDriver'),
                 'mailHost' => get_setting('mailHost'),
@@ -59,6 +61,8 @@ class BusinessSettingController extends Controller
                 'password' => get_setting('password'),
                 'fromEmail' => get_setting('fromEmail'),
                 'fromName' => get_setting('fromName'),
+
+                'home_products'=> json_decode(get_setting('home_products')),
             ]
         ]);
     }
@@ -124,12 +128,12 @@ class BusinessSettingController extends Controller
             }
         }
 
-        Log::info('Update Business Settings', [
-            'message' => 'Update Successfully Done...!',
-            'time' => now()
-        ]);
+//        Log::info('Update Business Settings', [
+//            'message' => 'Update Successfully Done...!',
+//            'time' => now()
+//        ]);
 
-        return back();
+        return redirect()->back();
     }
 
     public function logoUpdate(){

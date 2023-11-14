@@ -57,7 +57,7 @@
                                             <span class="invoice-number">#{{ order.id }}</span>
                                         </h4>
                                         <div class="invoice-date-wrapper">
-                                            <p class="invoice-date-title">Order Date: {{ order.order_date }}</p>
+                                            <p class="invoice-date-title">Order Date: {{ $formattedTime(order.created_at) }}</p>
                                         </div>
                                         <div class="invoice-date-wrapper">
                                             <p class="invoice-date-title text-capitalize">Order Status: <span class="badge bg-light-primary ms-1">{{ order.order_status }}</span></p>

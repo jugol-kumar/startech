@@ -33,13 +33,8 @@
                                             type="button" role="tab"
                                             aria-controls="v-pills-socials"
                                             aria-selected="false">Social Links</button>
-                                    <!--           <button class="nav-link"
-                                            id="v-pills-sms_api-tab"
-                                            data-bs-toggle="pill"
-                                            data-bs-target="#v-pills-sms_api"
-                                            type="button" role="tab"
-                                            aria-controls="v-pills-sms_api"
-                                            aria-selected="false">API Setup</button>
+
+                                    <!--
                                     <Link class="nav-link" :href="`${this.$page.props.ADMIN_URL}/admin-profile`">Profile Settings</Link>
 -->
                                     <!--
@@ -75,6 +70,13 @@
                                             aria-controls="v-pills-smtp"
                                             aria-selected="false">SMTP Setup</button>
 
+                                    <button class="nav-link"
+                                            id="v-pills-home_content-tab"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#v-pills-home_content"
+                                            type="button" role="tab"
+                                            aria-controls="v-pills-home_content"
+                                            aria-selected="false">Home Content</button>
 
 <!--                                    <a :href="`${this.$page.props.auth.ADMIN_URL}/home-page-settings`" class="nav-link">Home Setting</a>-->
                                     <a :href="`${this.$page.props.auth.ADMIN_URL}/footer-settings`" class="nav-link">Footer Setting</a>
@@ -516,6 +518,53 @@
                                         </div>
                                     </div>
 
+                                    <div class="tab-pane fade" id="v-pills-home_content" role="tabpanel" aria-labelledby="v-pills-home_content">
+                                        <div class="card">
+                                            <h2>Home Content Setup</h2>
+                                            <form class="form form-vertical" @submit.prevent="updateBuisnessSetting()">
+                                                <div class="row">
+
+                                                    <div class="col-12 mb-1">
+                                                        <label>Home Products</label>
+                                                        <vSelect :options="props.products"
+                                                                 multiple
+                                                                 v-model="createForm.home_products" label="title"
+                                                                 :reduce="item => item.id"
+                                                                 class="text-capitalize"
+                                                                 placeholder="e.g Select Home Products">
+                                                                <template v-slot:option="option">
+                                                                    <li class="d-flex align-items-start py-1">
+                                                                        <img :src="option.thumbnail" alt="" width="50" height="50">
+                                                                        <div class="ms-1">
+                                                                            <h6 class="mb-25">{{ option.title.slice(0, 30) }}</h6>
+                                                                            <p>{{ option.category?.title }}</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </template>
+                                                        </vSelect>
+                                                    </div>
+
+
+                                                    <div class="mt-2">
+                                                        <label>Home Contents</label>
+                                                        <Editor v-model="createForm.home_seo_content" isMultiline height="400px"/>
+                                                    </div>
+
+                                                    <div class="col-12 mt-2 d-inline-flex align-item-center">
+                                                        <button v-if="!isLoding" type="submit" disabled class="btn btn-primary me-1 waves-effect waves-float waves-light">
+                                                            <div class="spinner-border text-white me-1"  role="status"></div>
+                                                            <span>Submit</span>
+                                                        </button>
+
+                                                        <button v-else class="btn btn-primary me-1 waves-effect waves-float waves-light">
+                                                            Submit
+                                                        </button>
+                                                        <button type="reset" class="btn btn-outline-secondary waves-effect">Reset</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
 
                                     <div class="tab-pane fade" id="v-pills-smtp" role="tabpanel" aria-labelledby="v-pills-smtp">
                                         <div class="card">
@@ -629,7 +678,7 @@ import Layout from "../../Shared/Layout.vue";
 import { usePage, useForm } from '@inertiajs/inertia-vue3'
 import {computed, ref} from "vue"
 import timezone from "../../Store/timezone";
-
+import Editor from "../../components/Editor.vue";
 const APP_URL = usePage().props.value.ADMIN_URL;
 
 let props = defineProps({
@@ -640,6 +689,7 @@ let props = defineProps({
     main_url:String|null,
     updateSmtp:String|null,
     categories:[]|null,
+    products:[]|null,
 })
 
 let countries = props.countries;
@@ -677,11 +727,15 @@ let createForm = useForm({
     api_user_name     : props.bSettings.api_user_name ?? '',
     api_user_pass     : props.bSettings.api_user_pass ?? '',
 
+    home_seo_content  : props.bSettings.home_seo_content ?? '',
+
     inSizeDhaka:null,
     outSizeDhaka:null,
     shippingType:null,
 
     header_categories: props.bSettings.header_categories ?? [],
+
+    home_products: props.bSettings.home_products ?? [],
 
     headerMenuSetup:props.bSettings.headerMenuSetup ?? [{
         link:usePage().props.value.auth.MAIN_URL
@@ -729,16 +783,17 @@ let logoForm = useForm({
 let isLoding = ref({});
 
 let updateBuisnessSetting = () =>{
-    // isLoding.value = false
+    isLoding.value = false
     createForm.post(props.main_url, {
         onSuccess: (res)=>{
-            // isLoding.value = true
+            isLoding.value = true
             $sToast.fire({
                icon: "success",
                text: "Business Settings Update Successfully Done.:)",
             });
         },
         onError: (res) =>{
+            isLoding.value = true
             $sToast.fire({
                 icon: "error",
                 text: "Business Settings Not Update (:",

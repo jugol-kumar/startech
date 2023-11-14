@@ -10,18 +10,19 @@
 
 
         <div class="row m-0 p-0">
-            <div class="col-md-12">
+
+            <div class="col-md-12" v-if="props.orders.data.length > 0">
                 <div class="card page-shadow" v-for="item in props.orders.data" :key="item.id">
                     <div class="card-header border-b">
                         <div>
                             <h3>Order #{{ item.id }}</h3>
-                            <span>Order Date: {{ item.created_at }}</span>
+                            <span>Order Date: {{ $formattedTime(item.created_at) }}</span>
                         </div>
                         <div class="d-flex gap-1 ">
                             <span class="text-success">
                                 <vue-feather type="check-circle"/>
                             </span>
-                            <p class="m-0 text-success">{{ item.order_status }}</p>
+                            <p class="m-0 text-success text-capitalize">{{ item.order_status }}</p>
                         </div>
                     </div>
                     <div class="card-body">
@@ -50,6 +51,10 @@
                     </div>
                 </div>
             </div>
+
+            <p class="text-black fs-4 fw-semibold" v-else>
+                No have any order yet
+            </p>
         </div>
 <!--                <table class="table table-striped table-borderless table-responsive">
                     <thead>

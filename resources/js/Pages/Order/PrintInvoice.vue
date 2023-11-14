@@ -21,6 +21,15 @@ onMounted(() =>{
     <section class="app-user-list overflow-hidden">
             <div class="row">
                 <div class="col-md-9 mx-auto p-3">
+
+                    <div class="d-flex gap-1 mb-2">
+                        <a href="/dashboard" class="back-btn">
+                            <vue-feather type="arrow-left"/>
+                        </a>
+                        <h2 class="fw-semibold text-primary">Order Invoice</h2>
+                    </div>
+
+
                     <div class="card invoice-preview-card shadow-none">
                         <div class="card-body invoice-padding pb-0">
                             <div class="d-flex align-items-center justify-content-between">
@@ -46,7 +55,7 @@ onMounted(() =>{
                                             <span class="invoice-number">#{{ order.id }}</span>
                                         </h4>
                                         <div class="invoice-date-wrapper">
-                                            <p class="invoice-date-title">Order Date: {{ order.order_date }}</p>
+                                            <p class="invoice-date-title">Order Date: {{ $formattedTime(order.order_date) }}</p>
                                         </div>
                                         <div class="invoice-date-wrapper">
                                             <p class="invoice-date-title text-capitalize">Order Status: <span class="badge bg-light-primary ms-1">{{ order.order_status }}</span></p>

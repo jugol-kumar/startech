@@ -13,7 +13,7 @@ onMounted(() =>[
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top top-0 zindex-1 p-0 page-shadow">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top top-0 zindex-4 p-0 page-shadow">
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

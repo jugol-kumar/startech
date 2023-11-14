@@ -46,7 +46,7 @@ const formData = useForm({
     shippingType:null,
     inSideDhaka:null,
     outSideDhaka:null,
-    cod:null,
+    cod:1,
 
     seoImage:null,
     seoKeywords:[],
@@ -157,13 +157,35 @@ const cancelProducts = () => {
 const fullPageSpecification = ref(false)
 const fullPageSpec = () => fullPageSpecification.value = true;
 const defaultPageSpec = () => fullPageSpecification.value = false;
-const uploadThumbnail = (event) => formData.thumbnail = event.target.files[0];
+// const uploadThumbnail = (event) => formData.thumbnail = event.target.files[0];
 const seoImageUpload = (event) => formData.seoImage = event.target.files[0];
+// const images = (event) =>{
+//     for (let i = 0; i < event.target.files.length; i++){
+//         formData.images.push(event.target.files[i])
+//     }
+// }
+
+
+
+const thumbnailImage=ref(null)
+const uploadThumbnail = (event) => {
+    formData.thumbnail = event.target.files[0];
+    thumbnailImage.value = URL.createObjectURL(event.target.files[0])
+}
+
+const loadImages = ref([]);
 const images = (event) =>{
     for (let i = 0; i < event.target.files.length; i++){
         formData.images.push(event.target.files[i])
+        loadImages.value.push(URL.createObjectURL(event.target.files[i]))
     }
 }
+const removeImage = (index) =>{
+    formData.images.splice(index, 1);
+    loadImages.value.splice(index, 1);
+}
+
+
 
 </script>
 
@@ -181,7 +203,7 @@ const images = (event) =>{
                 </div>-->
 
         <div class="content-body">
-            <div class="row match-height">
+            <div class="row"> <!--match-height -->
                 <div :class=" fullPageSpecification ? 'd-none' : 'col-md-4'">
                     <div class="card">
                         <div class="card-body text-center">
@@ -286,17 +308,6 @@ const images = (event) =>{
                             </fieldset>
                         </div>
                     </div>
-
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="">
-                                <strong class="mb-md-25">Short Description</strong>
-                                <p class="border-bottom p-1 bg-light cursor-pointer" @click="addDescriptions"> {{ formData.description != "" ? formData.description.slice(0, 70)+"..." : 'e.g what you want to write about your product.' }}</p>
-                                <span class="text-danger" v-if="errors.description" v-text="errors.description"></span>
-                                <small class="text-danger" v-else>Max 350 Word...</small>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div :class="fullPageSpecification ? 'col-md-12' : 'col-md-6'">
                     <div :class="fullPageSpecification ? 'd-none' : 'card'">
@@ -309,16 +320,24 @@ const images = (event) =>{
                                             <div class="mb-1">
                                                 <label>Product Thumbnail</label>
                                                 <input type="file" @input="uploadThumbnail" class="form-control" v-c-tooltip="'Click here for choose file. It\'s Single File'"/>
+                                                <img :src="thumbnailImage" height="80" alt="">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-1">
                                                 <label>Product Image's</label>
                                                 <input type="file" class="form-control" @input="images" multiple v-c-tooltip="'Click here for choose file. If you want to chos multiple image then hold press ctrl and select images or select multiple image with mouse cursor.'"/>
+                                                <div class="d-flex align-items-center mt-1">
+                                                    <div v-for="(img, index) in loadImages" class="position-relative">
+                                                        <img :src="'/storage/'+img" height="80" class="border me-1" alt="" v-if="img.split('.')[1] != 0">
+                                                        <img :src="img" height="80" class="border me-1" alt="">
+                                                        <vue-feather @click="removeImage(index)" type="x" size="15" class="cursor-pointer position-absolute delete-image-icon"/>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+<!--                                    <div class="row">
                                         <div class="col">
                                             <label>Product Color</label>
                                             <vSelect :options="colors" label="name" v-model="formData.colorId" placeholder="e.g Select Product Color">
@@ -346,8 +365,16 @@ const images = (event) =>{
                                                     placeholder="Product Sizes"></v-select>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
+                            </div>
+
+
+                            <div class="">
+                                <label class="mb-md-25">Short Description</label>
+                                <p class="border-bottom p-1 bg-light cursor-pointer" @click="addDescriptions"> {{ formData.description != "" ? formData.description.slice(0, 70)+"..." : 'e.g what you want to write about your product.' }}</p>
+                                <span class="text-danger" v-if="errors.description" v-text="errors.description"></span>
+                                <!--                                <small class="text-danger" v-else>Max 350 Word...</small>-->
                             </div>
                         </div>
                     </div>
@@ -363,7 +390,7 @@ const images = (event) =>{
                                 </button>
                             </div>
                             <div class="">
-                                <Editor v-model="formData.specification" :isMultiline="fullPageSpecification" :height=" fullPageSpecification ? '600px' : '400px'"/>
+                                <Editor v-model="formData.specification" :isMultiline="fullPageSpecification" :height=" fullPageSpecification ? '600px' : '316px'"/>
                             </div>
                         </div>
                     </div>
@@ -383,7 +410,7 @@ const images = (event) =>{
                         </div>
                     </div>
 
-                    <div class="card">
+<!--                    <div class="card">
                         <div class="card-body">
                             <label class="label card-text">Shipping Config</label>
                             <select v-model="formData.shippingType" @change="shiConfig" class="form-control form-select">
@@ -393,15 +420,22 @@ const images = (event) =>{
                                 <option value="c">City Wise</option>
                             </select>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="card">
                         <div class="card-body text-center" v-c-tooltip="'Cash On Delivery Enable Or Disabled'">
-                            <Switch v-model="formData.cod" class="mb-1"/>
+<!--                            New Condition<Switch v-model="formData.cod" class="mb-1"/> Used Condition-->
                             <span class="label">COD</span>
+                           <select name="experience_type"
+                                   v-model="formData.cod"
+                                    class="form-control selectpicker">
+                                <option disabled selected value="null">Select Product Conditon</option>
+                                <option value="0">Old Condition</option>
+                                <option value="1">New Condition</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="card">
+<!--                    <div class="card">
                         <a @click="vatAndTax">
                             <div class="card-body d-flex align-items-center justify-content-center">
                                 <h4 class="py-2 mb-0 text-info card-title">Vat</h4>
@@ -409,7 +443,7 @@ const images = (event) =>{
                                 <h4 class="py-2 mb-0 text-primary card-title">Tax</h4>
                             </div>
                         </a>
-                    </div>
+                    </div>-->
 
                     <div class="card">
                         <a @click="seoDetailsModal">

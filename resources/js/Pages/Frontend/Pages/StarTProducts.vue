@@ -57,7 +57,12 @@ const showProductDetails =()=>document.getElementById(props.product.slug).$vb.mo
 
     const cartSize = ref(null);
     const selectSize = (event) => cartSize.value = event.target.value;
-    const addToCart = () => store.addToCart({...props.product, quantity:1})
+
+
+    const addToCart = () => {
+        let sellPrice = props.product.discount ?? props.product.price;
+        store.addToCart({...props.product, price:sellPrice, quantity:1})
+    }
 
     const isInCart = computed(() =>{
         return store.cart.find(item => item.id === props.product.id)?.quantity
