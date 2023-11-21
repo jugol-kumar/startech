@@ -191,5 +191,14 @@ class ProductController extends Controller
     }
 
 
+    public function latestOffers(){
+        $add = Advised::query()->latest()->paginate(12);
+
+        return inertia('Frontend/Product/AllAds',[
+            'adds' => $add
+        ]);
+    }
+
+
 }
 

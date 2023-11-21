@@ -145,11 +145,11 @@ class HomeController extends Controller
 
 
     public function trams(){
-            return inertia('Frontend/Trams');
+        return inertia('Frontend/Trams');
     }
 
     public function policy(){
-            return inertia('Frontend/Policy');
+        return inertia('Frontend/Policy');
     }
 
     public function getSettings(){
@@ -174,14 +174,12 @@ class HomeController extends Controller
         return json_decode(get_setting(Request::input('key')));
     }
 
-
     public function pageView($slug){
         return inertia('Frontend/Page', [
             'info' => Page::with('seo')->where('slug', $slug)->first()
         ]);
-
-
     }
+
 
 
 }

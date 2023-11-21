@@ -120,7 +120,7 @@ const pages = computed(() =>{
                 </a>
             </div>-->
 
-<!--            <div class="d-lg-block d-none text-white">
+            <a href="/latest-offers" class="d-lg-block d-none text-white">
                 <div class="d-flex align-items-center gap-1">
                     <vue-feather type="gift"/>
                     <div class="">
@@ -130,7 +130,7 @@ const pages = computed(() =>{
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </a>
 
             <a href="/dashboard" class="d-lg-block d-none text-white">
                 <div class="d-flex align-items-center gap-1">

@@ -97,7 +97,9 @@ watch([search, orderBy], debounce(function ([val, val2]) {
                                         <p class="fw-bolder m-0 card-title">Condition</p>
                                         <div class="btn-group mt-2" role="group" aria-label="Basic example">
                                             <button @click="conditionFilter('null')" href="javascript:void(0)" type="button" class="btn border-primary"
-                                               style="border-left-color: var(--bs-primary) !important" :class="{'btn-primary' : props.checkCondition === 'null', 'btn-primary' : props.checkCondition === null}">See All</button>
+                                               style="border-left-color: var(--bs-primary) !important" :class="{
+                                                   'btn-primary' : props.checkCondition === 'null',
+                                               }">See All</button>
                                             <button @click="conditionFilter('used')" href="javascript:void(0)" type="button"
                                                class="btn border-primary" :class="{'btn-primary' : props.checkCondition === 'used'}">Used</button>
                                             <button @click="conditionFilter('new')" href="javascript:void(0)" type="button" class="btn border-primary"

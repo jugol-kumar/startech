@@ -49,8 +49,6 @@ Route::controller(HomeController::class)->name('frontend.')->group(function(){
     Route::get('/pages/{slug?}', 'pageView');
 
 
-
-
     Route::get('/category/{slug}', 'showSubCategories')->name('showSubCategories');
     Route::get('/sub-category/{slug}', 'showChildCategories')->name('showChildCategories');
     Route::get('/child-category/{slug}', 'showChildCategoriesProducts')->name('showChildCategoriesProducts');
@@ -62,6 +60,10 @@ Route::controller(App\Http\Controllers\Frontend\ProductController::class)->name(
     Route::get('/product/single-product/{slug}', 'singleProduct')->name('singleProduct');
     Route::post('/product/single-product/{slug}', 'singleProductWithDiscount')->name('singleProduct');
     Route::get('/products/ads-products', 'adsProducts')->name('adsProducts');
+
+
+    Route::get('/latest-offers', 'latestOffers')->name('latestOffers');
+
 });
 
 Route::middleware('customer')->group(function(){
@@ -227,8 +229,4 @@ Route::get('/clear', function (){
 Route::get('/storage', function (){
     Artisan::call('storage:link');
     return dd("linked");
-});
-
-Route::get('/prient', function (){
-   return view('welcome');
 });
