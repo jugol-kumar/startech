@@ -12,6 +12,8 @@
 
 
   <style>
+
+
       .preloader{
           width:100%;
           height:100vh;

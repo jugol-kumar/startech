@@ -13,7 +13,7 @@
                             <div class="card mb-0">
                                 <div class="card-body">
                                     <a href="/" class="d-flex justify-content-center align-items-center">
-                                        <img :src="`${$page.props.auth.MAIN_URL}/images/logo.png`" alt="" width="60">
+                                        <img :src="`${$page.props.auth.MAIN_URL}/storage/${dataStore.settingItem.find(item => item.key === 'header_logo')?.val}`" style="max-width: 65px" alt="">
                                     </a>
 
 
@@ -71,7 +71,9 @@
 
 
 import { useForm } from '@inertiajs/inertia-vue3';
-import { ref, computed } from 'vue'
+import {ref, computed, onMounted} from 'vue'
+import {useDataStore} from "../../Store/useDataStore";
+
 
 const passwordFieldType = ref('password')
 let form = useForm({
@@ -84,6 +86,15 @@ const togglePasswordVisibility = () => {
 const passwordToggleIcon = computed(() =>{
     return passwordFieldType.value === 'password' ? 'eye' : 'eye-off'
 })
+
+
+const dataStore = useDataStore();
+
+onMounted(() =>{
+    dataStore.setSetting('header_logo');
+})
+
+
 let submit = () => {
     form.post('/login');
 };

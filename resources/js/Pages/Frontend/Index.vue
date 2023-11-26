@@ -58,9 +58,9 @@
     <Layout>
         <div class="bg-white page-shadow">
             <div class="container">
-                <section class="py-3">
+                <section class="py-1 py-md-2 py-lg-3">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-12 col-md-9 p-sm-0">
                             <div class="row match-height slider-section ms-auto">
                                 <Carousel :autoplay="5000" :wrap-around="true" v-if="true">
                                     <Slide v-for="slide in props.sliders" :key="slide">
@@ -88,9 +88,9 @@
                         </div>
                         <div class="col-md-3 home-ads ads-bg">
                             <div class="row">
-                                <div class="col-md-12 mt-1" v-for="adds in props.advised">
+                                <div class="col-6 col-md-12 mt-1" v-for="adds in props.advised">
                                     <div class="card page-shadow">
-                                        <div class="card-body">
+                                        <div class="card-body p-1 p-lg-2">
                                             <a :href="`/products/ads-products?add=${adds?.slug}`">
                                                 <img class="w-100" :src="adds.image" alt="">
                                             </a>
@@ -131,8 +131,10 @@
                     <h2 class="text-black fw-bolder">Featured Products</h2>
                     <p class="text-black">Check & Get Your Desired Product!</p>
                 </div>
-                <div class="row match-height">
-                    <div class="col-lg-3 col-md-3 product-item" v-for="product in props.homeProducts">
+                <div class="row match-height home-featured-product">
+                    <div class="col-lg-3 col-md-3 product-item"
+                         :class="i % 2 === 0? 'pr-m-5': 'pl-m-5'"
+                         v-for="(product, i) in props.homeProducts">
                         <Products :product="product"/>
                     </div>
                 </div>
@@ -151,7 +153,7 @@
 
             </section>
             <section id="category-with-details" class="sm-mt-15-rem-min mt-3 mb-5" >
-                <div v-html="props.homeContent">
+                <div class="home-seo-content" v-html="props.homeContent">
 
                 </div>
 <!--                <h2 class="text-black">Preferred Area of Our Work</h2>-->

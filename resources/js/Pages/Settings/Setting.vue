@@ -297,20 +297,20 @@
                                                         <div class="col-12">
                                                             <Image v-model="logoForm.header_logo" :showFile="props.bSettings.header_logo" label="Header Logo"/>
 
-                                                            <img :src="props.bSettings.header_logo" width="100" height="70"
+                                                            <img :src="'/storage/'+props.bSettings.header_logo" width="100" height="70"
                                                                  v-if="typeof props.bSettings.header_logo === 'string'"
                                                                  style="object-fit: contain" alt="">
                                                         </div>
                                                         <div class="col-12">
                                                             <Image v-model="logoForm.footer_logo" :showFile="props.bSettings.footer_logo" label="Footer Logo"/>
 
-                                                            <img :src="props.bSettings.footer_logo" width="100" height="70"
+                                                            <img :src="'/storage/'+props.bSettings.footer_logo" width="100" height="70"
                                                                  v-if="typeof props.bSettings.footer_logo === 'string'"
                                                                  style="object-fit: contain" alt="">
                                                         </div>
                                                         <div class="col-12">
                                                             <Image v-model="logoForm.logo_fabs" :showFile="props.bSettings.fevicon_logo" label="Favicon"/>
-                                                            <img :src="props.bSettings.fevicon_logo" width="100" height="70"
+                                                            <img :src="'/storage/'+props.bSettings.fevicon_logo" width="100" height="70"
                                                                  v-if="typeof props.bSettings.fevicon_logo === 'string'"
                                                                  style="object-fit: contain" alt="">
                                                         </div>
@@ -708,6 +708,7 @@ let createForm = useForm({
     name        : props.bSettings.name ?? '',
     header_logo : props.bSettings.header_logo ?? '',
     logo_fabs   : props.bSettings.logo_fabs ?? '',
+    footer_logo   : props.bSettings.logo_fabs ?? '',
     app_details : props.bSettings.details ?? '',
     timezone    : props.bSettings.timezone?.tz ?? '',
     country     : props.bSettings.country?.name ?? '',
@@ -801,6 +802,8 @@ let updateBuisnessSetting = () =>{
         }
     });
 }
+
+
 let updateLogo = () =>{
     isLoding.value = false
     logoForm.post(props.main_url, {

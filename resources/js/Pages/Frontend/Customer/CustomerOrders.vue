@@ -26,8 +26,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex gap-2">
+                        <div class="d-flex justify-content-between flex-column flex-md-row align-items-sm-center">
+                            <div class="d-flex gap-2 flex-md-row flex-column align-items-center align-items-md-start">
                                 <div class="order-image">
                                     <img class="w-100 h-100" :src="item?.order_details[0]?.product.thumbnail" alt="">
                                 </div>
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex gap-2 align-items-center">
+                            <div class="d-flex gap-2 align-items-center w-100 justify-content-between">
                                 <h3>{{ item?.grand_total }} ৳</h3>
                                 <a :href="`/single-order/${item.id}`" class="btn btn-primary">View</a>
                             </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <Pagination :links="orders.links" :from="orders.from" :to="orders.to" :total="orders.total"/>
+                        <Pagination :links="orders.links" :from="orders.from" :to="orders.to" :total="orders.total" notShowNumber/>
                     </div>
                 </div>
             </div>

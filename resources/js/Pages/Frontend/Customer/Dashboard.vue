@@ -1,7 +1,7 @@
 <template>
     <CustomerLayout>
         <div class="row user-dashboard">
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <a href="/customer/orders">
                     <div class="card page-shadow">
                         <div class="flex-column card-body d-flex align-items-center justify-content-center">
@@ -13,7 +13,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <a href="/customer/profile">
                     <div class="card page-shadow">
                         <div class="flex-column card-body d-flex align-items-center justify-content-center">
@@ -25,7 +25,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <a href="/customer/change-password">
                     <div class="card page-shadow">
                         <div class="flex-column card-body d-flex align-items-center justify-content-center">
@@ -37,7 +37,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <a href="/customer/address">
                     <div class="card page-shadow">
                         <div class="flex-column card-body d-flex align-items-center justify-content-center">
@@ -49,7 +49,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <a href="/customer/wishlist">
                     <div class="card page-shadow">
                         <div class="flex-column card-body d-flex align-items-center justify-content-center">
@@ -61,7 +61,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <a href="/logout">
                     <div class="card page-shadow">
                         <div class="flex-column card-body d-flex align-items-center justify-content-center">

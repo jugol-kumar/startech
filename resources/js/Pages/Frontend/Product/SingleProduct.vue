@@ -7,15 +7,24 @@ import {useCartStore} from "../../../Store/useCartStore";
 import {useWishListStore} from "../../../Store/useWishListStore";
 import {useData} from "../../../Composables/useData";
 import StarTProducts from "../Pages/StarTProducts.vue";
+import LightBox from "../../../components/LightBox.vue";
 
 const store = useCartStore();
 const watchlistStore = useWishListStore();
 const data = useData();
 
-
+let facebookBtn=null;
+let linkedinBtn=null;
+let twitterBtn=null;
     onMounted(() =>{
         store.initCart();
         watchlistStore.initWishList();
+
+        // Social Share links.
+         facebookBtn= document.getElementById('shareFacebook');
+         linkedinBtn= document.getElementById('shareLinkedin');
+         twitterBtn= document.getElementById('shareTwitter');
+
     })
     const props = defineProps({
         product:Object|null,
@@ -110,29 +119,115 @@ const data = useData();
 
     }
 
+
+    const shareButton = ref(false)
+
+
+
+
+
+
+function shareFacebook() {
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
+}
+
+function shareTwitter() {
+    window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(`${props.product.title}`), '_blank');
+}
+
+function shareLinkedIn() {
+    window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href), '_blank');
+}
+
+// function shareWhatsApp() {
+//     window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out this product: ' + '{{ $product->name }}') + '%0A' + encodeURIComponent(window.location.href), '_blank');
+// }
+
+
+
+
+// posturl posttitle
+let postUrl = encodeURI(document.location.href);
+let postTitle = encodeURI(props.product?.title);
+
+facebookBtn?.setAttribute("href",`https://www.facebook.com/sharer.php?u=${postUrl}`);
+twitterBtn?.setAttribute("href", `https://twitter.com/share?url=${postUrl}&text=${postTitle}`);
+linkedinBtn?.setAttribute("href", `https://www.linkedin.com/shareArticle?url=${postUrl}&title=${postTitle}`);
+
+
+
+
 </script>
 
 <template>
     <Layout>
+        <head>
+            <title>{{ props.product?.title }}</title>
+            <meta name="description" :content="props.product?.description" />
+            <meta property="og:title" :content="props.product?.title" />
+            <meta property="og:description" :content="props.product?.description" />
+            <meta property="og:url" :content="this.$page.props.MAIN_URL" />
+            <meta property="og:site_name" content="Computer Wala" />
+            <meta property="og:image" :content="`${this.$page.props.auth.MAIN_URL}${images[0]}`" />
+            <meta property="og:image:width" content="224" />
+            <meta property="og:image:height" content="65" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" :content="props.product?.title" />
+            <meta name="twitter:description" :content="props.product?.description" />
+            <meta name="twitter:image" :content="`${this.$page.props.auth.MAIN_URL}${images[0]}`" />
+        </head>
+
         <section class="app-ecommerce-details">
             <div class="card page-shadow position-relative pt-4">
                 <!-- Product Details starts -->
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card">
+                            <div class="card single-product-page-header">
                                 <div class="py-1 rounded-5 card-body page-shadow d-flex align-items-center justify-content-between">
-                                    <div/>
+                                    <div class="d-flex align-items-center">
+                                        <p class="p-0 m-0 share">Share: </p>
+                                        <ul v-if="shareButton" class="list-group d-flex flex-row gap-1">
+                                            <li>
+                                                <button class="btn d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">
+                                                    <vue-feather type="facebook"/>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="btn d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">
+                                                    <vue-feather type="instagram"/>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="btn d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">
+                                                    <vue-feather type="twitter"/>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="btn d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">
+                                                    <vue-feather type="linkedin"/>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        <ul class="list-group d-flex flex-row">
+                                            <li class="cursor-pointer" @click="shareFacebook">
+                                                    <vue-feather type="facebook"/>
+                                            </li>
+<!--                                            <li><vue-feather type="instagram"/></li>-->
+                                            <li class="cursor-pointer"  @click="shareTwitter">
+                                                <vue-feather type="twitter"/>
+                                            </li>
+                                            <li class="cursor-pointer" @click="shareLinkedIn"><vue-feather type="linkedin"/></li>
+                                        </ul>
+                                    </div>
                                     <div class="d-flex align-items-center gap-1">
-
                                         <button @click="watchlistStore.removeFromWishList(product)"
                                                 v-if="watchlistStore.wishList.find(item => item.id === product?.id)"
                                                 class="d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">
                                             <vue-feather type="bookmark"/>
                                             <span>Saved</span>
                                         </button>
-
-                                        <button @click="addToWishList(product)" v-else class="d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">
+                                        <button @click="addToWishList(product)" v-else class="btn d-flex align-items-center gap-1 btn btn-primary btn-icon rounded-md">
                                             <vue-feather type="bookmark"/>
                                             <span>Save</span>
                                         </button>
@@ -154,7 +249,8 @@ const data = useData();
                     <div class="row my-2 gap-5">
                         <div class="col-12 col-md-5">
                             <div class="row flex-column">
-                                <Gallery :images="images"/>
+                                <LightBox class="d-block d-lg-none" :images="images"/>
+                                <Gallery class="d-none d-lg-block" :images="images"/>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -167,14 +263,13 @@ const data = useData();
                                 <a href="#" class="company-name">{{ product?.category?.title }}</a>
                             </span>-->
                             <div class="ecommerce-details-price d-flex flex-wrap mt-3 flex-column">
-
                                 <div>
                                     <h2 class="fw-bolder text-black">Key Featureds</h2>
                                     <p class="white-space fw-semibold text-black mt-2" v-text="product?.description"></p>
                                     <a href="#" class="fs-4 view-more-info text-decoration-underline"> View more information's</a>
                                 </div>
 
-                                <div class="mt-2 w-50">
+                                <div class="mt-2 w-lg-50 w-100">
                                     <h3 class="text-black">Payment Option</h3>
                                     <div class="d-flex align-items-center gap-3 border-5 border-primary p-1">
                                         <div>
@@ -274,14 +369,14 @@ const data = useData();
                                 </div>
                             </div>-->
 
-                            <div class="d-flex flex-column flex-sm-row flex-wrap pt-1 gap-2">
-                                <div class="d-flex align-items-center"  style="width:30%">
-                                    <button @click="decrement" class="btn btn-primary fs-3 fw-bolder rounded-0" >-</button>
-                                    <input  class="form-control rounded-0 py-1" readonly type="text" :value="initCart" min="1">
-                                    <button @click="increment" class="btn btn-primary fs-3 fw-bolder rounded-0" >+</button>
+                            <div class="d-flex flex-row flex-wrap pt-1 gap-0 gap-lg-2 align-items-start justify-content-lg-start justify-content-between">
+                                <div class="d-flex align-items-center w-lg-30 w-md-50 cart-btn-radius">
+                                    <button @click="decrement" class="btn btn-primary fs-3 fw-bolder rounded-start" >-</button>
+                                    <input  class="form-control rounded-0 qty-input-p text-center" readonly type="text" :value="initCart" min="1">
+                                    <button @click="increment" class="btn btn-primary fs-3 fw-bolder rounded-end" >+</button>
                                 </div>
                                 <div>
-                                    <button @click="addToCart(product)"  class="btn btn-primary btn-cart me-0 me-sm-1 mb-1 mb-sm-0 d-flex align-items-center">
+                                    <button @click="addToCart(product)"  class="btn sm-cart-btn btn-primary me-0 me-sm-1 mb-1 mb-sm-0 d-flex align-items-center">
                                         <vue-feather type="shopping-cart" class="me-50"/>
                                         <span class="add-to-cart">{{"Add to cart"}}</span>
                                     </button>
@@ -375,30 +470,39 @@ const data = useData();
 <!--                            <button class="fw-bolder text-black btn bg-white page-shadow">Reviews</button>-->
                         </div>
                         <div class="card page-shadow">
-                            <div class="card-body">
+                            <div class="card-body spesificaiton">
                                 <span v-html="product?.specification"></span>
                             </div>
                         </div>
 
-                        <div class="card page-shadow">
-                            <div class="card-body">
-                                <div class="mt-4 mb-2 text-center">
-                                    <h4>Related Products</h4>
-                                    <p class="card-text">People also search for this items</p>
-                                </div>
-                                <ProductCarousel :products="product?.category?.products" navigation pagination/>
+                        <div class="row match-height home-featured-product">
+                            <div class="mb-2">
+                                <h4>Related Products</h4>
+                                <p class="card-text">People also search for this items</p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 product-item"
+                                 :class="i % 2 === 0? 'pr-m-5': 'pl-m-5'"
+                                 v-for="(product, i) in product?.category?.products">
+                                <StarTProducts :product="product"/>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-3 sticky-top" style="max-height: 100vh; overflow-y:scroll;">
+                    <div class="col-md-3 sticky-top" style="max-height: 100vh; overflow-y:scroll; z-index:1">
                         <div class="card page-shadow">
                             <div class="card-body">
                                 <h2 class="card-title">Products This Brand</h2>
                             </div>
                         </div>
+                        <div class="row match-height brand-products">
+                            <div class="col-lg-12 col-md-3 product-item"
+                                 :class="i % 2 === 0? 'pr-m-5': 'pl-m-5'"
+                                 v-for="(product, i) in product?.brand?.products">
+                                <StarTProducts :product="product"/>
+                            </div>
+                        </div>
 
-                        <StarTProducts v-for="item in product?.category?.products" :product="item" :key="'related_productes'+item.id"/>
+<!--                        <StarTProducts v-for="item in product?.category?.products" :product="item" :key="'related_productes'+item.id"/>-->
 
 <!--                        <div class="card page-shadow" v-for="item in product?.category?.products" :key="'related_productes'+item.id">
                             <div class="card-body">

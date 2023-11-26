@@ -1,5 +1,5 @@
 <template>
-    <Carousel  :breakpoints="breakpoints"  :items-to-show="2.5" :wrap-around="false">
+    <Carousel :breakpoints="breakpoints">
         <Slide v-for="item in props.products" :key="item.id">
             <StarTProducts :product="item"/>
         </Slide>
@@ -34,17 +34,20 @@
     })
     const settings = {itemsToShow: 1, snapAlign: 'center'}
     const breakpoints = {
-        360: {
-            itemsToShow: 3,
+        300: {
+            itemsToShow: 1.3,
             snapAlign: 'center',
         },
         700: {
             itemsToShow: 3,
-                snapAlign: 'end',
+            snapAlign: 'end',
         },
         1024: {
-            itemsToShow: 5,
-            snapAlign: 'start'
+            itemsToShow: 4,
+            snapAlign: 'end',
+            mouseDrag: true,
+            pagination:false,
+            autoplay:1000
         }
     }
 </script>

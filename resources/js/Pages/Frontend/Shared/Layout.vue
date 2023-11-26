@@ -33,6 +33,7 @@ onMounted(()=>{
     store.setSetting('twitter_profile');
     store.setSetting('linkedin_profile');
     store.footerData('customPages')
+
 })
 const props = defineProps({
     parentCategories:[]|null,
@@ -52,7 +53,6 @@ onMounted(()=>{
         show.value = false
     }, 1000)
     store.setSetting('header_logo');
-
     store.initTopCategories()
 })
 
@@ -89,7 +89,7 @@ const pages = computed(() =>{
     <nav class="navbar navbar-expand-md bg-primary">
         <div class="container">
             <a href="/">
-                <img :src="`${$page.props.auth.MAIN_URL}/storage/${store.settingItem.find(item => item.key === 'header_logo')?.val}`" width="80" alt="">
+                <img :src="`${$page.props.auth.MAIN_URL}/storage/${store.settingItem.find(item => item.key === 'header_logo')?.val}`" width="80" style="border-radius: 50%" alt="">
 <!--                <img src="../../../../images/logo-white-1.png" alt="">-->
             </a>
             <a class="btn d-lg-none d-block text-white" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
@@ -120,40 +120,41 @@ const pages = computed(() =>{
                 </a>
             </div>-->
 
-            <a href="/latest-offers" class="d-lg-block d-none text-white">
-                <div class="d-flex align-items-center gap-1">
-                    <vue-feather type="gift"/>
-                    <div class="">
-                        <p class="fw-bolder m-0 p-0">Offers</p>
-                        <div class="d-flex align-items-center">
-                            <span>Latest Offers</span>
+            <div class="d-flex align-items-center gap-3">
+                <a href="/latest-offers" class="d-lg-block d-none text-white">
+                    <div class="d-flex align-items-center gap-1">
+                        <vue-feather type="gift"/>
+                        <div class="">
+                            <p class="fw-bolder m-0 p-0">Offers</p>
+                            <div class="d-flex align-items-center">
+                                <span>Latest Offers</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-
-            <a href="/dashboard" class="d-lg-block d-none text-white">
-                <div class="d-flex align-items-center gap-1">
-                    <vue-feather type="user"/>
-                    <div class="">
-                        <p class="fw-bolder m-0 p-0">Account</p>
-                        <div class="d-flex align-items-center" v-if="$page.props.auth?.user">
-                            <a class="text-white" href="/dashboard">Profile</a>
-                            <span style="margin:0 5px">or</span>
-                            <a class="text-white" href="/logout">Logout</a>
-                        </div>
-                        <div class="d-flex align-items-center" v-else>
-                            <a class="text-white" href="/customer/login">Register</a>
-                            <span style="margin:0 5px">or</span>
-                            <a class="text-white" href="/customer/login">Login</a>
+                </a>
+                <a href="/dashboard" class="d-lg-block d-none text-white">
+                    <div class="d-flex align-items-center gap-1">
+                        <vue-feather type="user"/>
+                        <div class="">
+                            <p class="fw-bolder m-0 p-0">Account</p>
+                            <div class="d-flex align-items-center" v-if="$page.props.auth?.user">
+                                <a class="text-white" href="/dashboard">Profile</a>
+                                <span style="margin:0 5px">or</span>
+                                <a class="text-white" href="/logout">Logout</a>
+                            </div>
+                            <div class="d-flex align-items-center" v-else>
+                                <a class="text-white" href="/customer/login">Register</a>
+                                <span style="margin:0 5px">or</span>
+                                <a class="text-white" href="/customer/login">Login</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
 
-            <a href="/login" class="d-lg-block d-none text-white">
-                <a href="/products?condition=used" class="btn bg-white text-primary fs-4 fw-bold">Pre Owned</a>
-            </a>
+<!--            <a href="/login" class="d-lg-block d-none text-white">-->
+<!--                <a href="/products?condition=used" class="btn bg-white text-primary fs-4 fw-bold">Pre Owned</a>-->
+<!--            </a>-->
         </div>
     </nav>
 
@@ -161,9 +162,15 @@ const pages = computed(() =>{
 
     <nav class="navbar navbar-expand-md fixed-bottom bg-primary d-lg-none">
         <div class="container-fluid">
-            <a class="btn btn-sm d-lg-none bg-white p-5-px"
+<!--            <a class="btn btn-sm d-lg-none bg-white p-5-px"
                data-bs-toggle="offcanvas"
                href="#userProfile" role="button" aria-controls="offcanvasExample">
+                <vue-feather class="text-black" type="user"/>
+            </a>-->
+            <a v-if="$page.props.auth.user" href="/dashboard" class="btn btn-sm d-lg-none bg-white p-5-px">
+                <vue-feather class="text-black" type="user"/>
+            </a>
+            <a v-else href="/customer/login" class="btn btn-sm d-lg-none bg-white p-5-px">
                 <vue-feather class="text-black" type="user"/>
             </a>
 
@@ -290,12 +297,15 @@ const pages = computed(() =>{
     </div>
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+
         <button type="button" class="sm-canvas-close" data-bs-dismiss="offcanvas" aria-label="Close">
-            <vue-feather type="x" size="12"/>
+            <vue-feather type="x"/>
         </button>
-        <div class="offcanvas-body d-flex flex-column justify-content-between">
+        <div class="offcanvas-body d-flex flex-column justify-content-between position-relative">
             <nav class="sidebar">
-                <div class="sidebar-header">
+<!--                <a href="/products?condition=used" class="btn btn-primary text-white fs-4 fw-bold w-100 rounded-0">Pre Owned</a>-->
+
+                <div class="sidebar-header sticky-top text-left">
                     <h3>Category</h3>
                 </div>
                 <ul style="margin-bottom:10rem">
@@ -304,7 +314,7 @@ const pages = computed(() =>{
                         @click="openSubMenu(node)"
                         :class="openSubMenuUl === node.id && node?.sub_categories.length > 0 ? 'first_lavel_border_left' : ''"
                     >
-                        <a class="parent_a fw-bold" :href="node?.sub_categories.length > 0 ? 'javascript:void(0)' : `${$page.props.auth.MAIN_URL}/category/${node.slug}`">
+                        <a class="parent_a fw-bold" :href="node?.sub_categories.length > 0 ? 'javascript:void(0)' : `/products?category=${node.slug}`">
                             <img :src="node.icon" style="max-width: 30px; max-height: 30px; "
                                  class="img-fluid"  alt="avatar">
                             {{ node.title }}
@@ -315,14 +325,14 @@ const pages = computed(() =>{
                                 @click="openChildMenu(item)"
                                 :class="openChildMenuUl === item.id && item.child_categories.length > 0 ? 'first_lavel_border_left' : ''"
                                 class="sub_category_active active_color">
-                                <a :href="item?.child_categories.length > 0 ? 'javascript:void(0)' : `${$page.props.auth.MAIN_URL}/sub-category/${item.slug}`">
+                                <a :href="item?.child_categories.length > 0 ? 'javascript:void(0)' : `/products?sub_category=${item.slug}`">
                                     {{ item?.title }}
                                     <vue-feather :type="openChildMenuUl === item.id ? 'chevron-down' : 'chevron-right'" size="13" v-if="item.child_categories.length > 0"/>
                                 </a>
                                 <ul class="third_level" :class="openChildMenuUl === item.id ? '' : 'd-none'" v-if="item.child_categories.length > 0">
                                     <li class="level_three_active active_color"
                                         v-for="cItem in item.child_categories" :key="cItem?.id">
-                                        <a :href="`${$page.props.auth.MAIN_URL}/child-category/${cItem.slug}`">
+                                        <a :href="`/products?child_category=${cItem.slug}}`">
                                             {{ cItem.title }}
                                         </a>
                                     </li>
@@ -403,10 +413,9 @@ const pages = computed(() =>{
     </div>
 -->
 
-    <a
-        data-bs-toggle="modal"
+    <a data-bs-toggle="modal"
         data-bs-target="#addItemModal"
-        class="cart-details-button" style="right: 0">
+        class="cart-details-button" style="right: 0; z-index: 11111">
         <div class="text-white">
             <vue-feather type="shopping-bag"/>
             <p class="m-0">{{ cartStore.getCartLength }} Items</p>
@@ -510,7 +519,7 @@ const pages = computed(() =>{
 }
 .cat-image:hover,
 .cat-group .sub-group .sum-item:hover{
-    background: linear-gradient(306deg, #ffd3b9, transparent);
+    background: linear-gradient(306deg, var(--bs-primary), transparent);
 }
 .cat-group .sub-group .sum-item{
     border: none !important;
@@ -552,6 +561,7 @@ const pages = computed(() =>{
 }
 </style>
 <style lang="scss" scoped>
+
 .avatar-upload {
     position: relative;
     max-width: 205px;

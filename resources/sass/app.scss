@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 $primary: #081621;
+//$primary: #081621;
 @import './base/bootstrap';
 @import './base/bootstrap-extended';
 @import './base/colors';
@@ -10,6 +11,7 @@ $primary: #081621;
 @import "./base/plugins/forms/select2/select2.scss";
 @import "./base/plugins/forms/form-wizard.scss";
 @import "./preloader.sass";
+
 html body {
     background: #f2f4f8 !important;
     scroll-behavior: smooth !important;
@@ -22,12 +24,12 @@ html body {
     border-radius: 15px;
 }
 
-/* Track */
+///* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #ffffff;
 }
-
-/* Handle */
+//
+///* Handle */
 ::-webkit-scrollbar-thumb {
     background: var(--bs-primary);
     border-radius: 15px;

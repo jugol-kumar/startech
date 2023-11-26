@@ -1,25 +1,27 @@
 <template>
-    <Carousel id="gallery" :items-to-show="1" :wrapAround="true" v-model="currentSlide">
-        <Slide v-for="slide in images" :key="slide">
-            <div class="carousel__item">
-                <img :src="slide">
-            </div>
-        </Slide>
-    </Carousel>
+    <div>
+        <Carousel id="gallery" :items-to-show="1" :wrapAround="true" v-model="currentSlide">
+            <Slide v-for="slide in images" :key="slide">
+                <div class="carousel__item">
+                    <img :src="slide">
+                </div>
+            </Slide>
+        </Carousel>
 
-    <Carousel class="mt-1"
-        id="thumbnails"
-        :items-to-show="3"
-        :wrapAround="true"
-        v-model="currentSlide"
-        ref="carousel"
-    >
-        <Slide v-for="(slide, index) in images" :key="slide">
-            <div class="carousel__item" @click="slideTo(index)">
-                <img :src="slide" alt="">
-            </div>
-        </Slide>
-    </Carousel>
+        <Carousel class="mt-1"
+                  id="thumbnails"
+                  :items-to-show="3"
+                  :wrapAround="true"
+                  v-model="currentSlide"
+                  ref="carousel"
+        >
+            <Slide v-for="(slide, index) in images" :key="slide">
+                <div class="carousel__item" @click="slideTo(index)">
+                    <img :src="slide" alt="">
+                </div>
+            </Slide>
+        </Carousel>
+    </div>
 </template>
 
 <script setup>

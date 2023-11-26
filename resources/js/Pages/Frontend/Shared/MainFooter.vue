@@ -27,7 +27,7 @@
 
                 <div class="col">
                     <div class="address-content">
-                        <img :src="`${$page.props.auth.MAIN_URL}/storage/${store.settingItem.find(item => item.key === 'footer_logo')?.val}`" width="120" alt="">
+                        <img :src="`${$page.props.auth.MAIN_URL}/storage/${store.settingItem.find(item => item.key === 'footer_logo')?.val}`" width="120" style="border-radius: 50%" alt="">
                         <p class="mt-3 sm-footer-about" style="text-align: justify">
                             {{ store.settingItem.find(item => item.key === 'app_details')?.val }}
                         </p>

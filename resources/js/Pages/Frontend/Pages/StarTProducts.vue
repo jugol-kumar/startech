@@ -89,23 +89,27 @@ const showProductDetails =()=>document.getElementById(props.product.slug).$vb.mo
 
 
 <template>
-    <div class="card offer border-0">
+    <div class="card offer border-0 single-product-card">
         <a :href="`${$page.props.auth.MAIN_URL}/product/single-product/${props.product.slug}`">
             <img class="card-img-top w-100 star-pro-img" :src="props.product.thumbnail" alt="">
         </a>
         <div class="card-body" @click="showProductDetails">
             <div class="card-product-details card-text d-flex flex-column text-left">
-                <h5 class="text-black text-capitalize">
-                    <a :href="`${$page.props.auth.MAIN_URL}/product/single-product/${props.product.slug}`">
-                        {{ props.product?.title }}
+                <h5 class="text-black text-capitalize product-title">
+                    <a class="d-md-none d-block" :href="`${$page.props.auth.MAIN_URL}/product/single-product/${props.product.slug}`">
+                        {{ props.product?.title.length > 20 ? props.product?.title?.slice(0, 20) : props.product?.title }}...
+                    </a>
+
+                    <a class="d-none d-lg-block" :href="`${$page.props.auth.MAIN_URL}/product/single-product/${props.product.slug}`">
+                        {{ props.product?.title.length > 50 ? props.product?.title?.slice(0, 50) : props.product?.title }}...
                     </a>
                 </h5>
             </div>
         </div>
         <div class="card-footer px-2 border-0">
-            <div class="d-flex align-items-center gap-2">
-                <h4 class="fw-bold text-danger">{{ $showPrice(product.discount ? product.discount : product.price) }}</h4>
-                <s class="fs-5" v-if="product.discount">{{ $showPrice(product.price) }}</s>
+            <div class="d-flex justify-content-between gap-2">
+                <h4 class="fw-bold text-danger product-price">{{ $showPrice(product.discount ? product.discount : product.price) }}</h4>
+                <s class="fs-5 product-price" v-if="product.discount">{{ $showPrice(product.price) }}</s>
             </div>
         </div>
     </div>

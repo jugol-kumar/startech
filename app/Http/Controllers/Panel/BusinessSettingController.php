@@ -29,9 +29,9 @@ class BusinessSettingController extends Controller
                 'name'        => get_setting('name'),
                 'details'     => get_setting('app_details'),
 
-                'header_logo' => Storage::url(get_setting('header_logo')),
-                'footer_logo' => Storage::url(get_setting('footer_logo')),
-                'fevicon_logo'=> Storage::url(get_setting('logo_fabs')),
+                'header_logo' => get_setting('header_logo'),
+                'footer_logo' => get_setting('footer_logo'),
+                'fevicon_logo'=> get_setting('logo_fabs'),
 
                 'timezone'    => json_decode(get_setting('timezone')),
                 'country'     => json_decode(get_setting('country')),
@@ -69,6 +69,7 @@ class BusinessSettingController extends Controller
 
     public function updateSetting()
     {
+
         foreach (Request::all() as $type => $value){
             $business_settings = BusinessSetting::where('type', $type)->first();
 
@@ -127,18 +128,11 @@ class BusinessSettingController extends Controller
                 }
             }
         }
-
-//        Log::info('Update Business Settings', [
-//            'message' => 'Update Successfully Done...!',
-//            'time' => now()
-//        ]);
-
         return redirect()->back();
     }
 
     public function logoUpdate(){
 
-        return dd(Request::file('logo_fabs'));
 
         if (Request::hasFile('header_logo')){
             $business_settings = BusinessSetting::where('type', 'header_logo')->first();

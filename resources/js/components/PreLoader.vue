@@ -19,6 +19,9 @@
 
 <style scoped>
 .preloader {
-    background: var(--bs-primary);/*v-bind('props.backgroundColor');*/
+    width: 100vw;
+    position: fixed;
+    background: var(--bs-primary);
+    z-index: 99999;
 }
 </style>
